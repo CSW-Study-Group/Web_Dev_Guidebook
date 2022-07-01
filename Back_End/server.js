@@ -13,6 +13,10 @@ app.get('/', (req, res) => {
     res.send('Hello, Back -> End');
 });
 
-app.listen(config.get('server.port'), () => {
-    console.log(`Server Running on ${config.get('server.port')} Port!`);
+// app.listen(config.get('server.port'), () => {
+//     console.log(`Server Running on ${config.get('server.port')} Port!`);
+// });
+
+app.listen(3050, () => {
+    console.log(`Server Running on 3050 Port!`);
 });
