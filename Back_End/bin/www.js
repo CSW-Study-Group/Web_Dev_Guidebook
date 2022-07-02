@@ -1,6 +1,6 @@
 "use strict";
 
-const app = require("../server");
+const app = require('../server');
 const config = require('config');
 
 app.listen(config.get('server.port'), () => {
