@@ -2,17 +2,9 @@
 
 const express = require("express");
 const router = express.Router();
-const db = require('../src/utils/connect');
 
-router.get("/", (req, res) => {
-    res.send('Hello, Back -> End');
-});
+const ctrl = require("../controllers");
 
-router.get("/users", (req, res) => {
-    db.connection.query( `SELECT * FROM users`, (err, results)=>{
-        if(err) console.log(err);
-        res.send(results);
-    });
-});
+router.get("/", ctrl.output.home);
 
 module.exports = router;
