@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const db = require('../config/db');
+const db = require('../src/utils/connect');
 
 router.get("/", (req, res) => {
     res.send('Hello, Back -> End');
