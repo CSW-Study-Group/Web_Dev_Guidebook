@@ -4,6 +4,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const config = require('config');
 const cors = require('cors');
 
 //라우팅
@@ -17,5 +18,9 @@ app.use(cors());
 
 app.use("/", home);
 app.use("/db", db);
+
+app.listen(config.get('server.port'), () => {
+    console.log(`Server Running on ${config.get('server.port')} Port!`);
+});
 
 module.exports = app;
