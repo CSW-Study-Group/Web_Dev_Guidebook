@@ -5,6 +5,6 @@ const router = express.Router();
 
 const ctrl = require('../controllers/db');
 
-router.get("/users", ctrl.output.users);
+router.get("/userinfo", ctrl.output.user_info);
 
 module.exports = router;

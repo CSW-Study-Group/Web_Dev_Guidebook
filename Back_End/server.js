@@ -3,6 +3,9 @@
 //모듈
 const express = require('express');
 const app = express();
+
+const { sequelize } = require('./src/utils/connect');
+
 const bodyParser = require('body-parser');
 const config = require('config');
 const cors = require('cors');
@@ -19,8 +22,15 @@ app.use(cors());
 app.use("/", home);
 app.use("/db", db);
 
-app.listen(config.get('server.port'), () => {
+//연결
+app.listen(config.get('server.port'), () => { // 서버 연결
     console.log(`Server Running on ${config.get('server.port')} Port!`);
 });
 
-module.exports = app;
+sequelize.sync({ force: false }) // DB 연결
+    .then(() => {
+        console.log("Success connecting DB");
+    })
+    .catch((err) => {
+        console.error(err);
+    });
