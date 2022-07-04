@@ -1,4 +1,4 @@
-//"use strict";
+"use strict";
 
 //모듈
 const express = require('express');
