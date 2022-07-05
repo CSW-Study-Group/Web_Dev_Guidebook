@@ -3,8 +3,8 @@
 const { User } = require('../src/utils/connect');
 
 const output = {
-    user_info : async (req, res) => {
-        await User.findAll()
+    user_info : (req, res) => {
+        User.findAll()
             .then((response) => {
                 res.send(response);
             })
