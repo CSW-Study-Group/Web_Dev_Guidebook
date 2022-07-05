@@ -15,6 +15,19 @@ const output = {
                 console.log(error);
             });
     },
+    token_auth : (req, res) => {
+        const nickname = req.decoded.nickname;
+        const profile = req.decoded.profile;
+        
+        return res.status(200).json({
+            code: 200,
+            message: '토큰은 정상입니다.',
+            data: {
+            nickname: nickname,
+            profile: profile
+            }
+        });
+    },
 };
 
 const process = {
@@ -26,6 +39,8 @@ const process = {
                 id: req.body.id,
             },
         });
+
+        //console.log(req.headers.authorization);
 
         let token = jwt.sign({
             type: 'JWT',
