@@ -1,0 +1,1 @@
+export const requestDomain = 'http://localhost:6001'
