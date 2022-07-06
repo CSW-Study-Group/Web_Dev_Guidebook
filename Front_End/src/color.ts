@@ -3,18 +3,23 @@ const Color = {
         danger: '#f94144',
     },
     palette: {
+        common: {
+
+        },
         primary: {
             main: '#f8961e',
-            contrastText: '#fff',
+            contrastText: '#577590',
         },
         secondary: {
-            main: '#43aa8b',
-            contrastText: '#fff',
+            main: '#f9c74f',
+            contrastText: '#43aa8b',
         },
-        neutral: {
-            main: '#64748B',
-            contrastText: '#fff',
+        background: {
+            paper: '#f5f5f5'
         },
+        // text: {
+        //     primary:
+        // }
     },
 }
 
