@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-//import CameraIcon from '@mui/icons-material/PhotoCamera';
 import CssBaseline from '@mui/material/CssBaseline';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
@@ -11,6 +11,10 @@ import Copyright from 'components/copyright';
 import TopBar from 'components/topBar';
 
 const Main = () => {
+    let navigate = useNavigate()
+    const _handleNavigate = (name: String) => {
+        navigate(`/${name}`);
+    }
   return (
     <div>
         <CssBaseline />
@@ -31,8 +35,8 @@ const Main = () => {
                 여러분의 웹 개발 지식을 공유해보세요!
                 </Typography>
                 <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-                    <Button variant="contained" color="secondary">Register</Button>
-                    <Button variant="outlined" color="secondary">Login</Button>
+                    <Button variant="contained" color="secondary" onClick={() => _handleNavigate("register")}>Register</Button>
+                    <Button variant="outlined" color="secondary" onClick={() => _handleNavigate("login")}>Login</Button>
                 </Stack>
             </Container>
         </Box>
