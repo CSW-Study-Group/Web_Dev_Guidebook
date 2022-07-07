@@ -1,9 +1,7 @@
 "use strict";
 
 const { User } = require('../src/utils/connect');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const SECRET_KEY = config.get('JWT.secret_key');
+const sign_jwt = require('../functions/signJWT');
 
 const output = {
     home : (req, res) => {
@@ -25,7 +23,7 @@ const output = {
                 id: req.decoded.id,
             },
         });
-        
+
         return res.status(200).json({
             code: 200,
             message: "Token authorized.",
@@ -49,19 +47,23 @@ const process = {
             });
 
             if(user_info.id === req.body.id && user_info.psword === req.body.psword) { // 로그인 성공
-                let access_token = jwt.sign({
+                let access_token = sign_jwt.access({
                     type: 'JWT',
                     id: user_info.id,
                     psword: user_info.psword,
-                }, SECRET_KEY, {
-                    expiresIn: '15m', // 만료시간 15분
-                    issuer: config.get('JWT.issuer'),
+                });
+                
+                let refresh_token = sign_jwt.refresh({
+                    type: 'JWT',
+                    id: user_info.id,
+                    psword: user_info.psword,
                 });
                 
                 return res.status(200).json({
                     code: 200,
                     message: "Token is created.",
-                    token: access_token
+                    access_token: access_token,
+                    refresh_token: refresh_token
                 });
             }
             else if(user_info.psword !== req.body.psword) { // 비밀번호 틀림
