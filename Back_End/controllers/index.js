@@ -16,22 +16,29 @@ const output = {
                 console.log(error);
             });
     },
-    test_token_auth : async (req, res) => {
-        const user_info = await User.findOne({
-            attributes: ['nickname', 'email'],
-            where: { 
-                id: req.decoded.id,
-            },
-        });
-
-        return res.status(200).json({
-            code: 200,
-            message: "Token authorized.",
-            data: {
-            nickname: user_info.nickname,
-            email: user_info.email
-            }
-        });
+    test_auth : async (req, res) => {
+        try {
+            const user_info = await User.findOne({
+                attributes: ['nickname', 'email'],
+                where: { 
+                    id: req.decoded.id,
+                },
+            });
+    
+            return res.status(200).json({
+                code: 200,
+                message: "Token authorized.",
+                data: {
+                    nickname: user_info.nickname,
+                    email: user_info.email
+                }
+            });
+        } catch (error) {
+            return res.status(500).json({
+                code: 500,
+                message: error.message,
+            });
+        }
     },
 };
 
@@ -84,6 +91,16 @@ const process = {
     },
     register : (req, res) => {
 
+    },
+    get_token : (req, res) => {
+        const refresh_token = req.headers.authorization;
+        if(!refresh_token) return res.status(403);
+        const access_token = sign_jwt.issuance(refresh_token, res);
+        return res.status(200).json({
+            code: 200,
+            message: "Token is recreated.",
+            access_token: access_token,
+        });
     },
 };
 
