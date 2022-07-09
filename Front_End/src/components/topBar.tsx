@@ -21,10 +21,10 @@ const TopBar = () => {
     return (
         <ui.AppBar position="static" color='primary'>
             <ui.Toolbar>
-                <ui.IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                <ui.IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ color: 'common.white', mr: 2 }}>
                     <MenuIcon />
                 </ui.IconButton>
-                <ui.Typography variant="h6" color="inherit" component="div" sx={{ flexGrow: 1 }}>
+                <ui.Typography variant="h6" color="inherit" component="div" sx={{ color: 'common.white', flexGrow: 1 }}>
                     웹 개발 백과사전
                 </ui.Typography>
                 <div>
@@ -35,6 +35,7 @@ const TopBar = () => {
                         aria-haspopup="true"
                         onClick={handleMenu}
                         color="inherit"
+                        sx={{ color: 'common.white' }}
                     >
                         <AccountCircle />
                     </ui.IconButton>
