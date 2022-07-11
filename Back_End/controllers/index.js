@@ -83,7 +83,7 @@ const process = {
     register : (req, res) => {
 
     },
-    get_token : (req, res) => {
+    token_refresh : (req, res) => {
         const refresh_token = req.headers.authorization;
         if(!refresh_token) return res.status(403);
         const access_token = sign_jwt.issuance(refresh_token, res);
