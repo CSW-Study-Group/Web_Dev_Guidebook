@@ -51,19 +51,26 @@ const process = {
                 where: { 
                     id: req.body.id,
                 },
-            });
+            })
+            //.catch((e) => {
+            //     console.error(e);
+            //     if(e == "null"){
+
+            //     } else
+            //     throw new Error("-1");
+            // });
 
             if(user_info.id === req.body.id && user_info.psword === req.body.psword) { // 로그인 성공
                 let access_token = sign_jwt.access({
                     type: 'JWT',
                     id: user_info.id,
-                    psword: user_info.psword,
+                    //psword: user_info.psword,
                 });
                 
                 let refresh_token = sign_jwt.refresh({
                     type: 'JWT',
                     id: user_info.id,
-                    psword: user_info.psword,
+                    //psword: user_info.psword,
                 });
                 
                 return res.status(200).json({
