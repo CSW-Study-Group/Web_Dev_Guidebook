@@ -20,9 +20,7 @@ const output = {
         try {
             const user_info = await User.findOne({
                 attributes: ['nickname', 'email'],
-                where: { 
-                    id: req.decoded.id,
-                },
+                where: { id: req.decoded.id }
             });
     
             return res.status(200).json({
@@ -36,7 +34,7 @@ const output = {
         } catch (error) {
             return res.status(500).json({
                 code: 500,
-                message: error.message,
+                message: error.message
             });
         }
     },
@@ -92,7 +90,7 @@ const process = {
         return res.status(200).json({
             code: 200,
             message: "Token is recreated.",
-            access_token: access_token,
+            access_token: access_token
         });
     },
 };
