@@ -27,7 +27,6 @@ const sign_jwt = {
                 const access_token = this.access({
                     type: decoded.type,
                     id: decoded.id,
-                    //psword: decoded.psword,
                 });
                 return access_token;
             }
