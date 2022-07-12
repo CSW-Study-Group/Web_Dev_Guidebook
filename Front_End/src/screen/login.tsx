@@ -56,7 +56,7 @@ const Login = () => {
 						name="email"
 						autoComplete="email"
 						autoFocus
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(e.target.value)}
 					/>
 					<TextField
 						sx={{ borderColor: 'info.main' }}
@@ -68,7 +68,7 @@ const Login = () => {
 						type="password"
 						id="password"
 						autoComplete="current-password"
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(e.target.value)}
 					/>
 					<FormControlLabel
 						control={<Checkbox value="remember" color="primary" />}

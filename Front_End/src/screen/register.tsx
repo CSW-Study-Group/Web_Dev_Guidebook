@@ -64,7 +64,7 @@ const Register = () => {
 								id="firstName"
 								label="이름"
 								autoFocus
-								onChange={(e) => setUsername(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setUsername(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12}>
@@ -75,7 +75,7 @@ const Register = () => {
 								label="이메일 주소"
 								name="email"
 								autoComplete="email"
-								onChange={(e) => setEmail(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setEmail(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
@@ -87,7 +87,7 @@ const Register = () => {
 								type="password"
 								id="password"
 								autoComplete="new-password"
-								onChange={(e) => setPassword(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setPassword(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12} sm={6}>
@@ -99,7 +99,7 @@ const Register = () => {
 								type="password"
 								id="passwordCheck"
 								autoComplete="new-password"
-								onChange={(e) => setPasswordCheck(e.target.value)}
+								onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setPasswordCheck(e.target.value)}
 							/>
 						</Grid>
 						<Grid item xs={12}>
