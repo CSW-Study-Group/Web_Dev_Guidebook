@@ -40,6 +40,37 @@ exports.login = async (req, res) => {
     }
 }
 
+exports.register = async (req, res) => {
+    if(req.body.username && req.body.email && req.body.password) {
+        const [user, created] = await User.findOrCreate({ // 조건에 맞는 데이터 찾고 없으면 생성
+            where: { email: req.body.email }, // email 중복생성 X 를 위함
+            defaults: {
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password
+            }
+        });
+        if (created) { // created(데이터 생성의 성공유무)
+            return res.status(200).json({
+                code: 200,
+                message: "User created success.",
+            });
+        }
+        else {
+            return res.status(401).json({
+                code: 401,
+                message: "Email already exist.",
+            });
+        }
+    }
+    else {
+        return res.status(401).json({
+            code: 401,
+            message: "Input is void.",
+        });
+    }
+}
+
 exports.tokenRefresh = (req, res) => {
     const refresh_token = req.headers.authorization;
     if(!refresh_token) return res.status(403);
