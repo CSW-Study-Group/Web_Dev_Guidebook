@@ -6,22 +6,23 @@ module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
         return super.init(
             {  // 테이블 필드에 대한 설정
-                nickname: {
-                    type: Sequelize.STRING(30),
-                    allowNull: false,
-                },
                 id: {
-                    type: Sequelize.STRING(30),
+                    type: Sequelize.INTEGER,
+                    autoIncrement: true,
                     allowNull: false,
-                    unique: true,
+                    unique: true, // 중복 X
                     primaryKey: true,
                 },
-                psword: {
+                username: {
                     type: Sequelize.STRING(30),
                     allowNull: false,
                 },
                 email: {
                     type: Sequelize.STRING(30),
+                    allowNull: false,
+                },
+                password: {
+                    type: Sequelize.STRING(100),
                     allowNull: false,
                 },
             },

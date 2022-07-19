@@ -11,14 +11,14 @@ const config = require('config');
 const cors = require('cors');
 
 //라우팅
-const home = require('./routes');
+const apiRouter = require('./src/routes');
 
 //웹세팅
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/", home);
+app.use("/", apiRouter);
 
 //연결
 app.listen(config.get('server.port'), () => { // 서버 연결
