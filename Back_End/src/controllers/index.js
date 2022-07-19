@@ -53,7 +53,7 @@ exports.register = async (req, res) => {
         if (created) { // created(데이터 생성의 성공유무)
             return res.status(200).json({
                 code: 200,
-                message: "User created success.",
+                message: "User create success.",
             });
         }
         else {
