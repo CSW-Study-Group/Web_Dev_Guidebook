@@ -1,7 +1,7 @@
 "use strict";
 
 const Sequelize = require('sequelize');
-const User = require('../../models/user');
+const User = require('../models/user');
 
 // 데이터베이스 설정을 불러옴
 const config = require('config');
