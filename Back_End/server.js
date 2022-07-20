@@ -22,7 +22,3 @@ sequelize.sync({ force: false }).then(() => {
 }).catch((err) => {
     console.error(err);
 });
-
-app.get('/', (req, res, next) => {
-    res.send('hell0');
-})
