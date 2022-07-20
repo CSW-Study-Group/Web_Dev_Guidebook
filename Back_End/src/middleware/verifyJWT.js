@@ -23,4 +23,4 @@ exports.verifyJWT = (req, res, next) => {
             });
         }
     }
-}
+};
