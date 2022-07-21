@@ -106,7 +106,7 @@ const Register = () => {
 					</ui.Button>
 					<ui.Grid container justifyContent="flex-end">
 						<ui.Grid item>
-							<ui.Link href="/login" variant="body2" sx={{ color: 'info.main' }}>
+							<ui.Link href="login" variant="body2" sx={{ color: 'info.main' }}>
 								이미 계정이 있습니까? 로그인
 							</ui.Link>
 						</ui.Grid>
