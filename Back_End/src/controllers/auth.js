@@ -14,12 +14,12 @@ exports.login = (req, res, next) => {
                 });
             }
             else {
-                let accessToken = await signJWT.access({ type: 'JWT', email: user.email });
-                let refreshToken = await signJWT.refresh({ type: 'JWT', email: user.email });
+                let access_token = await signJWT.access({ type: 'JWT', email: user.email });
+                let refresh_token = await signJWT.refresh({ type: 'JWT', email: user.email });
                 return res.status(200).json({
                     message: "Authorize success",
-                    accessToken,
-                    refreshToken,
+                    access_token,
+                    refresh_token,
                     user,
                 });
             }
