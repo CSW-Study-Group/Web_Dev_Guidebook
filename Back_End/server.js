@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('config');
@@ -13,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/auth", authRouter);
-
 app.use(express.static(path.join(__dirname, '../Front_End/build')));
 
 app.listen(config.get('server.port'), () => { // 서버 연결

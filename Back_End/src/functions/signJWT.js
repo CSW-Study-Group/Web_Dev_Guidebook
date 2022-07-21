@@ -1,3 +1,5 @@
+"use strict";
+
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const ACCESS_SECRET_KEY = config.get('JWT.access_secret_key');

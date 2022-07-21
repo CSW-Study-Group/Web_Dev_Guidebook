@@ -1,10 +1,12 @@
+"use strict";
+
 const { User } = require('../utils/connect');
 const signJWT = require('../functions/signJWT');
 const { sign } = require('jsonwebtoken');
 
 exports.login = (req, res, next) => {
     let { email, password } = req.body;
-    User.findOne({ where: { email: req.body.email }}).then( async (user) => {
+    User.findOne({ where: { email: email }}).then( async (user) => {
         if ( user ) {
             /* 이슈 1. 암호화로 비밀번호 검증하는 코드 삽입해야함. 일단 if문으로 대체 */
             if ( password !== user.password ) {
