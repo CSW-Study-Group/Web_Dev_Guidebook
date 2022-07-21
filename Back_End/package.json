@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/react-redux": "^7.1.24",
     "body-parser": "^1.20.0",
     "concurrently": "^7.2.2",
     "config": "^3.3.7",
@@ -21,8 +20,6 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.18",
-    "react-redux": "^8.0.2",
-    "redux": "^4.2.0",
     "sequelize": "^6.21.2",
     "sequelize-cli": "^6.4.1"
   }
