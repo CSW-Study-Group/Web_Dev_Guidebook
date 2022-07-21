@@ -2,7 +2,6 @@
 
 const { User } = require('../utils/connect');
 const signJWT = require('../functions/signJWT');
-const { sign } = require('jsonwebtoken');
 
 exports.login = (req, res, next) => {
     let { email, password } = req.body;
@@ -41,10 +40,15 @@ exports.register = (req, res, next) => {
                 message: "Exist email",
             });
         }
-        else {
+        else { // 찾는 이메일이 없을 경우 (중복 X)
             if ( email === "" ) {
                 return res.status(405).json({
                     message: "Empty id",
+                });
+            }
+            else if (password === "") {
+                return res.status(405).json({
+                    message: "Empty password",
                 });
             }
             /* else if () { ... } 로 비밀번호 검증 로직 만들기 */
