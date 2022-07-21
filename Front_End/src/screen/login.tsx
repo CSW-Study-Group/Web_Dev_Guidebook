@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import * as ui from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
@@ -7,6 +8,11 @@ import { requestLogin } from 'utils/request';
 const Login = () => {
 	const [email, setEmail] = useState<String>('');
 	const [password, setPassword] = useState<String>('');
+
+	let navigate = useNavigate()
+    const _handleNavigate = (name: String) => {
+        navigate(`/${name}`);
+    }
 
 	const _handleLogin = () => {
 		requestLogin(email, password).then((response) => {
@@ -80,7 +86,7 @@ const Login = () => {
 							</ui.Link>
 						</ui.Grid>
 						<ui.Grid item>
-							<ui.Link sx={{ color: 'info.main' }} href="register" variant="body2">
+							<ui.Link sx={{ color: 'info.main' }} onClick={() => _handleNavigate("auth/register")} variant="body2">
 								{"계정이 없으신가요?"}
 							</ui.Link>
 						</ui.Grid>

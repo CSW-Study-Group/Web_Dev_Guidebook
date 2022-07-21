@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import * as ui from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { requestRegister } from 'utils/request';
@@ -8,6 +9,11 @@ const Register = () => {
 	const [email, setEmail] = useState<String>('');
 	const [password, setPassword] = useState<String>('');
 	const [passwordCheck, setPasswordCheck] = useState<String>('');
+
+	let navigate = useNavigate()
+    const _handleNavigate = (name: String) => {
+        navigate(`/${name}`);
+    }
 
 	const _handleRegister = () => {
 		if ( password === passwordCheck ) {
@@ -106,7 +112,7 @@ const Register = () => {
 					</ui.Button>
 					<ui.Grid container justifyContent="flex-end">
 						<ui.Grid item>
-							<ui.Link href="login" variant="body2" sx={{ color: 'info.main' }}>
+							<ui.Link onClick={() => _handleNavigate("auth/login")} variant="body2" sx={{ color: 'info.main' }}>
 								이미 계정이 있습니까? 로그인
 							</ui.Link>
 						</ui.Grid>
