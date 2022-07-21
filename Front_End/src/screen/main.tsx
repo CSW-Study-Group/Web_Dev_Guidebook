@@ -29,8 +29,8 @@ const Main = () => {
                 여러분의 웹 개발 지식을 공유해보세요!
                 </ui.Typography>
                 <ui.Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-                    <ui.Button variant="contained" color="secondary" onClick={() => _handleNavigate("register")}>Register</ui.Button>
-                    <ui.Button variant="outlined" color="secondary" onClick={() => _handleNavigate("login")}>Login</ui.Button>
+                    <ui.Button variant="contained" color="secondary" onClick={() => _handleNavigate("auth/register")}>Register</ui.Button>
+                    <ui.Button variant="outlined" color="secondary" onClick={() => _handleNavigate("auth/login")}>Login</ui.Button>
                 </ui.Stack>
             </ui.Container>
         </ui.Box>
