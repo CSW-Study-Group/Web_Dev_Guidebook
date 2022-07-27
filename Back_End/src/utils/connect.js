@@ -25,4 +25,7 @@ User.init(sequelize);
 Content.init(sequelize);
 Comment.init(sequelize);
 
+User.associate(db);
+Content.associate(db);
+
 module.exports = db;

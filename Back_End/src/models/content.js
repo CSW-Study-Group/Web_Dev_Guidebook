@@ -50,6 +50,7 @@ module.exports = class Content extends Sequelize.Model {
         );
     }
 
-    // 다른 모델과의 관계
-    // static associate(db) {}
+    static associate(db) {
+        db.Content.belongsTo(db.User, { foreignKey: 'userkey', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+    }
 };

@@ -6,6 +6,7 @@ const config = require('config');
 const cors = require('cors');
 const { sequelize } = require('./src/utils/connect');
 const authRouter = require('./src/routes/auth');
+const boardRouter = require('./src/routes/board');
 const path = require('path');
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/auth", authRouter);
+app.use("/board", boardRouter);
 app.use(express.static(path.join(__dirname, '../Front_End/build')));
 
 app.listen(config.get('server.port'), () => { // 서버 연결

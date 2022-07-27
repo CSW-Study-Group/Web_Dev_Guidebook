@@ -1,8 +1,8 @@
 "use strict";
 
-const Sequelize=require('sequelize');
+const Sequelize = require('sequelize');
 
-module.exports=class Comment extends Sequelize.Model{
+module.exports = class Comment extends Sequelize.Model{
     static init(sequelize){
         return super.init(
             {
@@ -22,9 +22,9 @@ module.exports=class Comment extends Sequelize.Model{
             {
                 sequelize,
                 timestamps: true, //타임스탬프
+                paranoid: true, //del관련
                 modelName: 'Comment',
                 tableName: 'commentinfo', //이름 확인
-                paranoid: true, //del관련
                 charset: 'utf8',
                 collate: 'utf8_general_ci'
             }

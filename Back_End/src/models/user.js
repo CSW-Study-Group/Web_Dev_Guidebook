@@ -38,5 +38,7 @@ module.exports = class User extends Sequelize.Model {
     }
 
     // 다른 모델과의 관계
-    // static associate(db) {}
+    static associate(db) {
+        db.User.hasMany(db.Content, { foreignKey: 'userkey', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+    }
 };
