@@ -7,33 +7,24 @@ module.exports=class Comment extends Sequelize.Model{
         return super.init(
             {
                 //테이블
-                id: { //이름확인 필요
+                id: { 
                     type: Sequelize.INTEGER,
                     autoIncrement: true, //자동으로 카운트 증가
                     allowNull: false,
                     unique: true, //중복X
                     primaryKey: true
-                    //more?
                 },
                 content: {
                     type: Sequelize.STRING(255),
                     allowNull: false,
-                    //more?
                 },
-                /*
-                deleted: { //이름 확인필요
-                    type: Sequelize.BOOLEAN,
-                    allowNull: false,
-                    //more?
-                },
-                */
             },
             {
                 sequelize,
-                timestamps: true, //확인필
+                timestamps: true, //타임스탬프
                 modelName: 'Comment',
-                tableName: 'comments', //이름 확인
-                paranoid: true, //확인필
+                tableName: 'commentinfo', //이름 확인
+                paranoid: true, //del관련
                 charset: 'utf8',
                 collate: 'utf8_general_ci'
             }
