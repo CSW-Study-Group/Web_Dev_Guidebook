@@ -40,5 +40,6 @@ module.exports = class User extends Sequelize.Model {
     // 다른 모델과의 관계
     static associate(db) {
         db.User.hasMany(db.Content, { foreignKey: 'userkey', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+        db.User.hasMany(db.Comment, { foreignKey: 'userkey', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
     }
 };

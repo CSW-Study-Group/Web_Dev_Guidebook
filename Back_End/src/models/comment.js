@@ -31,6 +31,9 @@ module.exports = class Comment extends Sequelize.Model{
         );
     }
 
-    //다른 모델과 관계
 
+    static associate(db) {
+        db.Comment.belongsTo(db.User, { foreignKey: 'userkey', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+        db.Comment.belongsTo(db.Content, { foreignKey: 'contentkey', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+    }
 }
