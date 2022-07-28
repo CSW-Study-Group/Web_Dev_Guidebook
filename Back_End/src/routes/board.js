@@ -7,6 +7,6 @@ const verifyJWT = require('../middleware/verifyJWT');
 const router = express.Router();
 
 router.post("/content", verifyJWT, ctrl.content);
-// router.get("/content", ctrl.content_g)
+router.get("/content/:userid", ctrl.contentByid)
 
 module.exports = router;

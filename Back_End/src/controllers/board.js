@@ -26,22 +26,22 @@ exports.content = (req, res, next) => {
     });
 };
 
-// exports.content_g = (req, res, next) => {
-//     Content.findAll({
-//         include: [{
-//             model: User,
-//             attributes: ['id'],
-//             where: {
-//                 id: 2,
-//             }
-//         }]
-//     }).then((data) => {
-//         return res.status(200).json({
-//             data
-//         });
-//     }).catch((err) => {
-//         return res.status(500).json({
-//             err
-//         });
-//     });
-// };
+exports.contentByid = (req, res, next) => {
+    User.findAll({
+        include: [{
+            model: Content,
+            attributes: ['id','title','content'],
+            where: {
+                userkey: req.params.userid,
+            }
+        }]
+    }).then((data) => {
+        return res.status(200).json({
+            data
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            err
+        });
+    });
+};
