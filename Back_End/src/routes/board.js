@@ -7,6 +7,6 @@ const verifyJWT = require('../middleware/verifyJWT');
 const router = express.Router();
 
 router.post("/content", verifyJWT, ctrl.content);
-router.get("/content/:userid", ctrl.contentByid)
+router.get("/content/:userid", ctrl.contentByid) // 해당 유저가 작성한 글 제공
 
 module.exports = router;
