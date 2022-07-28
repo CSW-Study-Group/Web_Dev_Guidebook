@@ -26,7 +26,7 @@ const signJWT = {
                 if (err) res.sendStatus(403);
                 const access_token = this.access({
                     type: decoded.type,
-                    email: decoded.email,
+                    id: decoded.id,
                 });
                 return access_token;
             }

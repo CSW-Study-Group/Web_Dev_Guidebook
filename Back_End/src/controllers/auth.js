@@ -14,8 +14,8 @@ exports.login = (req, res, next) => {
                 });
             }
             else {
-                let access_token = await signJWT.access({ type: 'JWT', email: user.email });
-                let refresh_token = await signJWT.refresh({ type: 'JWT', email: user.email });
+                let access_token = await signJWT.access({ type: 'JWT', id: user.id });
+                let refresh_token = await signJWT.refresh({ type: 'JWT', id: user.id });
                 return res.status(200).json({
                     message: "Authorize success",
                     access_token,

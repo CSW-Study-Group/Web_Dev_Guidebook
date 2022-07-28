@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const ACCESS_SECRET_KEY = config.get('JWT.access_secret_key');
 
-exports.verifyJWT = (req, res, next) => {
+const verifyJWT = (req, res, next) => {
     try {
         req.decoded = jwt.verify(req.headers.authorization, ACCESS_SECRET_KEY);
         return next();
@@ -26,3 +26,5 @@ exports.verifyJWT = (req, res, next) => {
         }
     }
 };
+
+module.exports = verifyJWT;
