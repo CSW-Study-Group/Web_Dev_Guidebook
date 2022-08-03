@@ -33,7 +33,7 @@ exports.content = (req, res, next) => {
     }
 };
 
-exports.contentByid = (req, res, next) => {
+exports.contentById = (req, res, next) => {
     User.findAll({
         include: [{
             model: Content,
@@ -53,7 +53,7 @@ exports.contentByid = (req, res, next) => {
     });
 };
 
-exports.stackBoard = (req, res) => {
+exports.boardStack = (req, res) => {
     Content.findAll({
         where: {
             stack: req.body.stack
