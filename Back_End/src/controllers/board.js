@@ -52,3 +52,19 @@ exports.contentByid = (req, res, next) => {
         });
     });
 };
+
+exports.stackBoard = (req, res) => {
+    Content.findAll({
+        where: {
+            stack: req.body.stack
+        },
+    }).then((data) => {
+        return res.status(200).json({
+            data
+        });
+    }).catch((err) => {
+        return res.status(500).json({
+            err
+        });
+    });
+};
