@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
     config.get('mysql.database'),
     config.get('mysql.username'),
     config.get('mysql.password'),
-    { host: config.get('mysql.host'), dialect: config.get('mysql.dialect'), port: config.get('mysql.port') }
+    { host: config.get('mysql.host'), dialect: config.get('mysql.dialect') }
 );
 
 const db = {};
