@@ -2,6 +2,7 @@
 
 const { Content } = require('../utils/connect');
 const { User } = require('../utils/connect');
+const {Op}=require('sequelize');
 
 exports.content = (req, res, next) => {
     let { title, content, tag, stack } = req.body;
@@ -47,6 +48,32 @@ exports.contentById = (req, res, next) => {
             data
         });
     }).catch((err) => {
+        return res.status(500).json({
+            err
+        });
+    });
+};
+
+exports.searchAll=(req,res)=>{ // username, content, title 조건 검색
+    // body{ type: "검색조건" , content: "검색어"} 형태
+    const {type,content}=req.body;
+    let where_user,where_content=null;
+    if (type==="username") { // 검색조건 username => User model에서 찾음. where_user 사용
+        where_user={[type]: {[Op.like]: "%"+content+"%"}}
+    }else{ // 그 외 검색조건 Content model에서 찾음. where_content 사용
+        where_content={[type]: {[Op.like]: "%"+content+"%"}}
+    }
+    Content.findAll({
+        include:[{
+            model: User,
+            where: where_user,
+        }],
+        where: where_content,
+    }).then((data)=>{
+        return res.status(200).json({
+            data
+        });
+    }).catch((err)=>{
         return res.status(500).json({
             err
         });
