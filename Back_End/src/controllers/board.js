@@ -34,7 +34,7 @@ exports.content = (req, res, next) => {
     }
 };
 
-exports.contentByid = (req, res, next) => {
+exports.contentById = (req, res, next) => {
     User.findAll({
         include: [{
             model: Content,
@@ -74,6 +74,22 @@ exports.searchAll=(req,res)=>{ // username, content, title 조건 검색
             data
         });
     }).catch((err)=>{
+        return res.status(500).json({
+            err
+        });
+    });
+};
+
+exports.boardStack = (req, res) => {
+    Content.findAll({
+        where: {
+            stack: req.body.stack
+        },
+    }).then((data) => {
+        return res.status(200).json({
+            data
+        });
+    }).catch((err) => {
         return res.status(500).json({
             err
         });
