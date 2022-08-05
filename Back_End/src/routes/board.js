@@ -6,10 +6,11 @@ const verifyJWT = require('../middleware/verifyJWT');
 
 const router = express.Router();
 
-router.post("/content", verifyJWT, ctrl.content);
-router.get("/content/:userid", ctrl.contentById) // 해당 유저가 작성한 글 제공
-router.get("/stack", ctrl.boardStack);
+router.get("/content/userid/:userid", ctrl.contentGetById) // 해당 유저가 작성한 글 제공
+router.get("/content/stack/:stack", ctrl.contentGetByStack);
 
-router.get("/searchAll",ctrl.searchAll);//전체검색
+router.post("/content", verifyJWT, ctrl.contentPost);
+
+router.get("/searchall/:type/:content", ctrl.searchAll); // 전체검색
 
 module.exports = router;
