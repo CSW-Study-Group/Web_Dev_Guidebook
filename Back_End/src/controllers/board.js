@@ -19,7 +19,8 @@ exports.contentGetById = (req, res, next) => {
 };
 
 exports.contentGetByStack = (req, res) => {
-    const { stack, sort } = req.query;
+    const { stack } = req.params;
+    const { sort } = req.query;
     let order = [ ['createdAt', 'DESC'] ]
     if (sort === "createdat") {
         order = [ ['createdAt', 'DESC'] ]
