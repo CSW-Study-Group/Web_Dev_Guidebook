@@ -21,14 +21,78 @@ exports.contentGetById = (req, res, next) => {
 exports.contentGetByStack = (req, res) => {
     const { stack } = req.params;
     const { sort } = req.query;
-    let order = [ ['createdAt', 'DESC'] ]
-    if (sort === "createdat") {
-        order = [ ['createdAt', 'DESC'] ]
-    } else if (sort === "hit") {
-        order = [ ['hit', 'DESC'] ]
-    }
+    let order = null;
+
+    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    else { order = [ ['createdAt', 'DESC'] ]; } // null or other
+
     Content.findAll({
         where: { stack: stack },
+        order: order
+    }).then((data) => {
+        return res.status(200).json({ data });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+};
+
+exports.searchPart = (req, res) => { // username, content, title 조건 검색
+    // body{ type: "검색조건" , content: "검색어"} 형태
+    const { stack } = req.params;
+    const { type, content, sort } = req.query;
+    let where_user, where_content, order = null;
+
+    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
+        where_user = {
+            stack: stack,
+            [type]: {[Op.like]: "%"+content+"%"}
+        }
+    } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
+        where_content = {
+            stack: stack,
+            [type]: {[Op.like]: "%"+content+"%"}
+        }
+    }
+
+    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    else { order = [ ['createdAt', 'DESC'] ]; } // null or other
+
+    Content.findAll({
+        include:[{
+            model: User,
+            where: where_user,
+            order: order
+        }],
+        where: where_content,
+        order: order
+    }).then((data) => {
+        return res.status(200).json({ data });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+};
+
+exports.searchAll = (req, res) => { // username, content, title 조건 검색
+    // body{ type: "검색조건" , content: "검색어"} 형태
+    const { type, content, sort } = req.query;
+    let where_user, where_content, order = null;
+
+    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
+        where_user = {[type]: {[Op.like]: "%"+content+"%"}};
+    } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
+        where_content = {[type]: {[Op.like]: "%"+content+"%"}};
+    }
+
+    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    else { order = [ ['createdAt', 'DESC'] ]; } // null or other
+
+    Content.findAll({
+        include:[{
+            model: User,
+            where: where_user,
+            order: order
+        }],
+        where: where_content,
         order: order
     }).then((data) => {
         return res.status(200).json({ data });
@@ -61,71 +125,4 @@ exports.contentPost = (req, res, next) => {
             return res.status(500).json({ err });
         });
     }
-};
-
-exports.searchAll = (req, res) => { // username, content, title 조건 검색
-    // body{ type: "검색조건" , content: "검색어"} 형태
-    const { type, content, sort } = req.query;
-    let where_user, where_content = null;
-    let order = [ ['createdAt', 'DESC'] ] 
-    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
-        where_user = {[type]: {[Op.like]: "%"+content+"%"}}
-    } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
-        where_content = {[type]: {[Op.like]: "%"+content+"%"}}
-    }
-    if (sort === "createdat") {
-        order = [ ['createdAt', 'DESC'] ]
-    } else if (sort === "hit") {
-        order = [ ['hit', 'DESC'] ]
-    }
-    Content.findAll({
-        include:[{
-            model: User,
-            where: where_user,
-            order: order
-        }],
-        where: where_content,
-        order: order
-    }).then((data) => {
-        return res.status(200).json({ data });
-    }).catch((err) => {
-        return res.status(500).json({ err });
-    });
-};
-
-exports.searchStack = (req, res) => { // username, content, title 조건 검색
-    // body{ type: "검색조건" , content: "검색어"} 형태
-    const { stack } = req.params;
-    const { type, content, sort} = req.query;
-    let where_user, where_content = null;
-    let order = [ ['createdAt', 'DESC'] ]
-    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
-        where_user = {
-            stack: stack,
-            [type]: {[Op.like]: "%"+content+"%"}
-        }
-    } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
-        where_content = {
-            stack: stack,
-            [type]: {[Op.like]: "%"+content+"%"}
-        }
-    }
-    if (sort === "createdat") {
-        order = [ ['createdAt', 'DESC'] ]
-    } else if (sort === "hit") {
-        order = [ ['hit', 'DESC'] ]
-    }
-    Content.findAll({
-        include:[{
-            model: User,
-            where: where_user,
-            order: order
-        }],
-        where: where_content,
-        order: order
-    }).then((data) => {
-        return res.status(200).json({ data });
-    }).catch((err) => {
-        return res.status(500).json({ err });
-    });
 };
