@@ -11,6 +11,7 @@ router.get("/content/stack/:stack", ctrl.contentGetByStack);
 
 router.post("/content", verifyJWT, ctrl.contentPost);
 
-router.get("/searchall/:type/:content", ctrl.searchAll); // 전체검색
+router.get("/content/searchall", ctrl.searchAll); // 전체검색
+router.get("/content/stack/:stack/searchstack", ctrl.searchStack); // 스택검색
 
 module.exports = router;
