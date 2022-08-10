@@ -26,11 +26,25 @@ exports.contentGetByStack = (req, res) => {
     if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
-    Content.findAll({
+    Content.findAndCountAll({
         where: { stack: stack },
-        order: order
+        order: order,
     }).then((data) => {
-        return res.status(200).json({ data });
+        let tip = new Array();
+        let question = new Array();
+        let share = new Array();
+
+        for( let i = 0; i < data.count ; i++ ) {
+            if(data.rows[i].tag === "tip") { tip.push(data.rows[i]) }
+            else if(data.rows[i].tag === "question") { question.push(data.rows[i]) } 
+            else { share.push(data.rows[i]) } // share
+        }
+
+        return res.status(200).json({ 
+            tip: tip,
+            question: question,
+            share: share
+        });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
@@ -39,7 +53,7 @@ exports.contentGetByStack = (req, res) => {
 exports.searchPart = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
     const { stack } = req.params;
-    const { type, content, sort } = req.query;
+    const { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
     if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
@@ -57,16 +71,22 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
     if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
-    Content.findAll({
+
+    Content.findAndCountAll({
         include:[{
             model: User,
             where: where_user,
             order: order
         }],
         where: where_content,
-        order: order
+        order: order,
+        limit: parseInt(limit),
+        offset: (parseInt(page) - 1) * parseInt(limit)
     }).then((data) => {
-        return res.status(200).json({ data });
+        return res.status(200).json({ 
+            data: data.rows,
+            maxPage: Math.ceil(data.count / parseInt(limit))
+        });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
@@ -74,7 +94,7 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
 
 exports.searchAll = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
-    const { type, content, sort } = req.query;
+    const { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
     if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
@@ -86,16 +106,21 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
     if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
-    Content.findAll({
+    Content.findAndCountAll({
         include:[{
             model: User,
             where: where_user,
             order: order
         }],
         where: where_content,
-        order: order
+        order: order,
+        limit: parseInt(limit),
+        offset: (parseInt(page) - 1) * parseInt(limit)
     }).then((data) => {
-        return res.status(200).json({ data });
+        return res.status(200).json({ 
+            data: data.rows,
+            maxPage: Math.ceil(data.count / parseInt(limit))
+        });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
