@@ -7,6 +7,7 @@ const cors = require('cors');
 const { sequelize } = require('./src/utils/connect');
 const authRouter = require('./src/routes/auth');
 const boardRouter = require('./src/routes/board');
+const profileRouter = require('./src/routes/profile');
 const path = require('path');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(cors());
 
 app.use("/auth", authRouter);
 app.use("/board", boardRouter);
+app.use("/profile", profileRouter);
 app.use(express.static(path.join(__dirname, '../Front_End/build')));
 
 app.listen(config.get('server.port'), () => { // 서버 연결
