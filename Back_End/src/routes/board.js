@@ -13,5 +13,6 @@ router.get("/content/stack/:stack/search", ctrl.searchPart); // 스택 - 부분�
 router.get("/content/searchall", ctrl.searchAll); // 전체검색
 
 router.post("/content", verifyJWT, ctrl.contentPost);
+router.post("/content/stack/:stack/:contentid", verifyJWT, ctrl.commentPost);
 
 module.exports = router;

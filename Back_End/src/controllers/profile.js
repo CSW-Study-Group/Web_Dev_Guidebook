@@ -1,19 +1,37 @@
 "use strict";
 
 const { Content } = require('../utils/connect');
+const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
 
 exports.selfWrittencontent = (req, res) => {
-    User.findAll({
-        attributes: ['id'],
-        where: { username: req.params.username }
+    const { page, limit } = req.query;
+    let userkey = req.decoded.id;
+    Content.findAndCountAll({
+        where: { userkey: userkey },
+        limit: parseInt(limit),
+        offset: (parseInt(page) - 1) * parseInt(limit)
     }).then((data) => {
-        Content.findAll({
-            where: { userkey: data }
-        }).then((req) => {
-            return res.status(200).json({ req });
-        }).catch((error) => {
-            return res.status(500).json({ error });
+        return res.status(200).json({ 
+            data: data.rows,
+            maxPage: Math.ceil(data.count / parseInt(limit))
+        });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+}
+
+exports.selfWrittencomment = (req, res) => {
+    const { page, limit } = req.query;
+    let userkey = req.decoded.id;
+    Comment.findAndCountAll({
+        where: { userkey: userkey },
+        limit: parseInt(limit),
+        offset: (parseInt(page) - 1) * parseInt(limit)
+    }).then((data) => {
+        return res.status(200).json({ 
+            data: data.rows,
+            maxPage: Math.ceil(data.count / parseInt(limit))
         });
     }).catch((err) => {
         return res.status(500).json({ err });

@@ -6,6 +6,7 @@ const verifyJWT = require('../middleware/verifyJWT');
 
 const router = express.Router();
 
-router.get("/userid/:username", ctrl.selfWrittencontent)
+router.get("/content", verifyJWT, ctrl.selfWrittencontent);
+router.get("/comment", verifyJWT, ctrl.selfWrittencomment);
 
 module.exports = router;
