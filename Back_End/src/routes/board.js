@@ -16,6 +16,6 @@ router.post("/content/deletion/:id", ctrl.contentDelete); // Delete
 
 router.get("/content/:id/auth/user/:userid", ctrl.auth) // 글 작성자 <-(matching)-> 현재 사용자
 
-router.post("/content/stack/:stack/:contentid", verifyJWT.verifyJwtAndNext, ctrl.commentPost);
+router.post("/content/:contentid/comment", verifyJWT.verifyJwtAndNext, ctrl.commentPost);
 
 module.exports = router;
