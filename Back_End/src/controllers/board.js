@@ -3,21 +3,7 @@
 const { Content } = require('../utils/connect');
 const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
-const { Op }=require('sequelize');
-
-exports.contentGetById = (req, res, next) => {
-    User.findAll({
-        include: [{
-            model: Content,
-            attributes: ['id','title','content'],
-            where: { userkey: req.params.userid }
-        }]
-    }).then((data) => {
-        return res.status(200).json({ data });
-    }).catch((err) => {
-        return res.status(500).json({ err });
-    });
-};
+const { Op } = require('sequelize');
 
 exports.contentGetByStack = (req, res) => {
     const { stack } = req.params;
@@ -127,9 +113,20 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
     });
 };
 
+exports.contentRead = (req, res) => {
+    Content.findOne({ where: { id: req.params.id } })
+    .then((data) => {
+        return res.status(200).json({ 
+            code: 200,
+            data: data
+        });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+}
+
 exports.contentPost = (req, res, next) => {
-    let { title, content, tag, stack } = req.body;
-    let userkey = req.decoded.id;
+    let { title, content, tag, stack, userid } = req.body;
 
     // 사용자가 title, content입력 안할시 오류 발생
     if(!title || !content) {
@@ -144,15 +141,19 @@ exports.contentPost = (req, res, next) => {
             stack: stack,
             hit: 0,
             view: 0,
-            userkey: userkey
-        }).then((data) => {
-            return res.status(200).json({ data });
+            userkey: userid
+        }).then(() => {
+            return res.status(200).json({ 
+                code: 200,
+                message: "content post success."
+            });
         }).catch((err) => {
             return res.status(500).json({ err });
         });
     }
 };
 
+<<<<<<< HEAD
 exports.commentPost = (req, res, next) => {
     let { content } = req.body;
     let contentid = req.params.contentid;
@@ -175,3 +176,61 @@ exports.commentPost = (req, res, next) => {
         });
     }
 };
+
+exports.contentUpdate = (req, res) => {
+    let { title, content, tag, stack } = req.body;
+    let contentid = req.params.id;
+
+    Content.update({
+        title: title,
+        content: content,
+        tag: tag,
+        stack: stack,
+    }, {
+        where: { id: contentid },
+    }).then(() => {
+        return res.status(200).json({ 
+            code: 200,
+            message: "content update success."
+        });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+}
+
+exports.contentDelete = (req, res) => {
+    Content.destroy({where: { id: req.params.id }})
+    .then(() => {
+        return res.status(200).json({ 
+            code: 200,
+            message: "content delete success."
+        });
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+}
+
+exports.auth = (req, res) => {
+    let userid = req.params.userid
+    let contentid = req.params.id;
+
+    Content.findOne({ 
+        attributes: ['userkey'],
+        where: { id: contentid }
+    })
+    .then((data) => {
+        if(parseInt(userid) === data.userkey) {
+            return res.status(200).json({ 
+                code: 200,
+                message: "auth success."
+            });
+        } else {
+            return res.status(401).json({ 
+                code: 401,
+                message: "auth fail."
+            });
+        }
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
+}
