@@ -1,6 +1,7 @@
 "use strict";
 
 const { Content } = require('../utils/connect');
+const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
 const { Op } = require('sequelize');
 
@@ -209,3 +210,26 @@ exports.auth = (req, res) => {
         return res.status(500).json({ err });
     });
 }
+
+exports.commentPost = (req, res, next) => {
+    let { content } = req.body;
+    let contentid = req.params.contentid;
+    let userkey = req.decoded.id;
+
+    // 사용자가 title, content입력 안할시 오류 발생
+    if(!content) {
+        return res.status(400).json({
+            message: "Please enter content."
+        });
+    } else {
+        Comment.create({
+            content: content,
+            userkey: userkey,
+            contentkey: contentid
+        }).then((data) => {
+            return res.status(200).json({ data });
+        }).catch((err) => {
+            return res.status(500).json({ err });
+        });
+    }
+};

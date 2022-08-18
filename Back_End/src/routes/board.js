@@ -2,7 +2,7 @@
 
 const express = require('express');
 const ctrl = require('../controllers/board');
-
+const verifyJWT = require('../middleware/verifyJWT');
 const router = express.Router();
 
 router.get("/content/stack/:stack", ctrl.contentGetByStack); // 스택
@@ -15,5 +15,7 @@ router.post("/content/updation/:id", ctrl.contentUpdate); // Update
 router.post("/content/deletion/:id", ctrl.contentDelete); // Delete
 
 router.get("/content/:id/auth/user/:userid", ctrl.auth) // 글 작성자 <-(matching)-> 현재 사용자
+
+router.post("/content/stack/:stack/:contentid", verifyJWT.verifyJwtAndNext, ctrl.commentPost);
 
 module.exports = router;
