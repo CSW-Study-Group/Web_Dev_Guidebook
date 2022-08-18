@@ -225,9 +225,12 @@ exports.commentPost = (req, res, next) => {
         Comment.create({
             content: content,
             userkey: userkey,
-            contentkey: contentid
-        }).then((data) => {
-            return res.status(200).json({ data });
+            contentkey: parseInt(contentid)
+        }).then(() => {
+            return res.status(200).json({ 
+                code: 200,
+                message: "comment post success."
+            });
         }).catch((err) => {
             return res.status(500).json({ err });
         });
