@@ -2,7 +2,6 @@
 
 const { Content } = require('../utils/connect');
 const { Comment } = require('../utils/connect');
-const { User } = require('../utils/connect');
 
 exports.selfWrittencontent = (req, res) => {
     const { page, limit } = req.query;

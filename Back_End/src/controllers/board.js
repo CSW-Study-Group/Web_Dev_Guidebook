@@ -153,7 +153,6 @@ exports.contentPost = (req, res, next) => {
     }
 };
 
-<<<<<<< HEAD
 exports.commentPost = (req, res, next) => {
     let { content } = req.body;
     let contentid = req.params.contentid;
