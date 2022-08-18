@@ -1,8 +1,8 @@
 "use strict";
 
-const express = require("express");
-const ctrl = require("../controllers/profile");
-const verifyJWT = require("../middleware/verifyJWT");
+const express = require('express');
+const ctrl = require('../controllers/profile');
+const verifyJWT = require('../middleware/verifyJWT');
 
 const router = express.Router();
 
