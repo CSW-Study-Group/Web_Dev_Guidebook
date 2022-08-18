@@ -114,7 +114,7 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
 };
 
 exports.contentRead = (req, res) => {
-    Content.findOne({ where: { id: req.params.id } })
+    Content.findOne({ where: { id: req.params.contentid } })
     .then((data) => {
         return res.status(200).json({ 
             code: 200,
@@ -155,7 +155,7 @@ exports.contentPost = (req, res, next) => {
 
 exports.contentUpdate = (req, res) => {
     let { title, content, tag, stack } = req.body;
-    let contentid = req.params.id;
+    let contentid = req.params.contentid;
 
     Content.update({
         title: title,
@@ -175,7 +175,7 @@ exports.contentUpdate = (req, res) => {
 }
 
 exports.contentDelete = (req, res) => {
-    Content.destroy({where: { id: req.params.id }})
+    Content.destroy({where: { id: req.params.contentid }})
     .then(() => {
         return res.status(200).json({ 
             code: 200,
@@ -188,7 +188,7 @@ exports.contentDelete = (req, res) => {
 
 exports.auth = (req, res) => {
     let userid = req.params.userid
-    let contentid = req.params.id;
+    let contentid = req.params.contentid;
 
     Content.findOne({ 
         attributes: ['userkey'],
@@ -225,9 +225,12 @@ exports.commentPost = (req, res, next) => {
         Comment.create({
             content: content,
             userkey: userkey,
-            contentkey: contentid
-        }).then((data) => {
-            return res.status(200).json({ data });
+            contentkey: parseInt(contentid)
+        }).then(() => {
+            return res.status(200).json({ 
+                code: 200,
+                message: "comment post success."
+            });
         }).catch((err) => {
             return res.status(500).json({ err });
         });
