@@ -5,7 +5,7 @@ const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
 const { Op } = require('sequelize');
 
-exports.selfWrittencontent = (req, res) => {
+exports.selfWrittenContent = (req, res) => {
     const { page, limit } = req.query;
     let userkey = req.decoded.id;
     Content.findAndCountAll({
@@ -24,7 +24,7 @@ exports.selfWrittencontent = (req, res) => {
         });
 };
 
-exports.selfWrittencomment = (req, res) => {
+exports.selfWrittenComment = (req, res) => {
     const { page, limit } = req.query;
     let userkey = req.decoded.id;
     Comment.findAndCountAll({
@@ -43,46 +43,41 @@ exports.selfWrittencomment = (req, res) => {
         });
 };
 
-exports.changeProfile = (req, res) => {
-    /*body
-      {
-          username
-          password
-          check_pw
-          decoded{id} => JWT 통과이후
-      }*/
-      let { username, password, check_pw } = req.body;
-      const id = req.decoded.id;
-      User.findOne({
-          where: { username: {[ Op.eq ]: username }}
-      }).then(( name_check ) => {
-          if ( name_check && name_check.id !== id) {
+exports.profileUpdate = (req, res) => {
+    /* body
+    {
+        username
+        password
+        check_pw
+        decoded{id} => JWT 통과이후
+    }
+    */
+    let { username, password, re_password } = req.body;
+    let id = req.decoded.id;
+
+    User.findOne({ where: { username: {[ Op.eq ]: username }}})
+    .then(( name_check ) => {
+        if ( name_check && name_check.id !== id) {
             //이름중복인경우
             return res.status(405).json({
-                message: "name is already use"
+                message: "Name is already use"
             });
-          } else {
+        } else {
             // 이름중복 X
-            User.findOne({
-                where: {id: {[ Op.eq ]: id }}
-            }).then((profile) => {
-                if ( !password ) {
-                    password = profile.password;
-                } else {
-                    if ( password !== check_pw) {
+            User.findOne({ where: {id: {[ Op.eq ]: id }}})
+            .then((profile) => {
+                if ( !password ) { password = profile.password; } 
+                else {
+                    if ( password !== re_password ) {
                         return res.status(405).json({
-                            message: "Incorrect password",
+                            message: "Incorrect password"
                         });
                     }
                 }
-                User.update(
-                    {
+                User.update({
                         username: username,
-                        password: password,
-                    },
-                    {
-                        where: {id: id},
-                    }
+                        password: password
+                    },{ where: {id: id} }
                 )
                 .then(( data ) => {
                     return res.status(200).json({ data });
@@ -91,6 +86,6 @@ exports.changeProfile = (req, res) => {
                     return res.status(500).json({ err });
                 });
             });
-          }
-      });
-  };
+        }
+    });
+};

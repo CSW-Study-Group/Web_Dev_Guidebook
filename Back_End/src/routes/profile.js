@@ -6,9 +6,9 @@ const verifyJWT = require('../middleware/verifyJWT');
 
 const router = express.Router();
 
-router.get("/content", verifyJWT.verifyJwtAndNext, ctrl.selfWrittencontent);
-router.get("/comment", verifyJWT.verifyJwtAndNext, ctrl.selfWrittencomment);
+router.get("/content", verifyJWT.verifyJwtAndNext, ctrl.selfWrittenContent);
+router.get("/comment", verifyJWT.verifyJwtAndNext, ctrl.selfWrittenComment);
 
-router.post("/profilechange", verifyJWT.verifyJwtAndNext, ctrl.changeProfile);
+router.post("/updation", verifyJWT.verifyJwtAndNext, ctrl.profileUpdate);
 
 module.exports = router;
