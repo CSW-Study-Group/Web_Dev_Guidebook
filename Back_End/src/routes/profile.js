@@ -6,7 +6,6 @@ const verifyJWT = require("../middleware/verifyJWT");
 
 const router = express.Router();
 
-//router.get("/userid/:username", ctrl.selfWrittencontent);
-router.post("/userid/:username/profilechange", verifyJWT, ctrl.changeProfile);
+router.post("/userid/:username/profilechange", verifyJWT.verifyJwtAndNext, ctrl.changeProfile);
 
 module.exports = router;
