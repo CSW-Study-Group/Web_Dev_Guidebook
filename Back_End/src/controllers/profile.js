@@ -1,9 +1,9 @@
 "use strict";
 
-const { Content } = require("../utils/connect");
-const { Comment } = require("../utils/connect");
-const { User } = require("../utils/connect");
-const { Op } = require("sequelize");
+const { Content } = require('../utils/connect');
+const { Comment } = require('../utils/connect');
+const { User } = require('../utils/connect');
+const { Op } = require('sequelize');
 
 exports.selfWrittencontent = (req, res) => {
     const { page, limit } = req.query;
@@ -67,7 +67,7 @@ exports.changeProfile = (req, res) => {
                 where: {id: {[ Op.eq ]: id }}
             }).then((profile) => {
                 if ( !password ) {
-                    password=profile.password;
+                    password = profile.password;
                 } else {
                     if ( password !== check_pw) {
                         return res.status(405).json({
