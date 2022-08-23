@@ -13,6 +13,7 @@ router.get("/content/:contentid", ctrl.contentRead); // Read
 router.post("/content", ctrl.contentPost); // Create
 router.post("/content/updation/:contentid", ctrl.contentUpdate); // Update
 router.post("/content/deletion/:contentid", ctrl.contentDelete); // Delete
+router.post("/content/hit/:contentid", verifyJWT.verifyJwtAndNext, ctrl.hit); // hit
 
 router.get("/content/:contentid/auth/user/:userid", ctrl.auth) // 글 작성자 <-(matching)-> 현재 사용자
 

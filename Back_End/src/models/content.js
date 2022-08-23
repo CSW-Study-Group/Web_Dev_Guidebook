@@ -53,5 +53,6 @@ module.exports = class Content extends Sequelize.Model {
     static associate(db) {
         db.Content.belongsTo(db.User, { foreignKey: 'userkey', targetKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
         db.Content.hasMany(db.Comment, { foreignKey: 'contentkey', sourceKey: 'id', onDelete: 'cascade', onUpdate: 'cascade' });
+        db.Content.belongsToMany(db.User, { through: 'HitContent' });
     }
 };

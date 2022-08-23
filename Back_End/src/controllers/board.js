@@ -3,7 +3,10 @@
 const { Content } = require('../utils/connect');
 const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
+const model = require('../utils/connect');
+const HitContent = model.sequelize.models.HitContent;
 const { Op } = require('sequelize');
+
 
 exports.contentGetByStack = (req, res) => {
     const { stack } = req.params;
@@ -235,4 +238,45 @@ exports.commentPost = (req, res, next) => {
             return res.status(500).json({ err });
         });
     }
+};
+
+exports.hit = (req, res) => {
+    let contentid = req.params.contentid;
+    let userkey = req.decoded.id;
+
+    HitContent.findOne({ where: { 
+        UserId: {[ Op.eq ]: userkey },
+        ContentId: {[ Op.eq ]: contentid }
+    }}).then((hit_check) => {
+        if ( hit_check === null ) {
+            HitContent.create({
+                UserId: userkey,
+                ContentId: parseInt(contentid)
+            }).then(() => {
+                return res.status(200).json({ 
+                    code: 200,
+                    message: "hit success."
+                });
+            }).catch((err) => {
+                return res.status(500).json({ err });
+            });
+        }
+        else {
+            HitContent.destroy({ 
+                where: { 
+                    ContentId: contentid,
+                    UserId: userkey
+                }
+            }).then(() => {
+                return res.status(200).json({ 
+                    code: 200,
+                    message: "hit delete."
+                });
+            }).catch((err) => {
+                return res.status(500).json({ err });
+            });
+        }
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
 };
