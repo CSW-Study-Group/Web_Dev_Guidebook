@@ -167,21 +167,27 @@ exports.contentUpdate = (req, res) => {
     let { title, content, tag, stack } = req.body;
     let contentid = req.params.contentid;
 
-    Content.update({
-        title: title,
-        content: content,
-        tag: tag,
-        stack: stack,
-    }, {
-        where: { id: contentid },
-    }).then(() => {
-        return res.status(200).json({ 
-            code: 200,
-            message: "Content update success."
+    if(!title || !content) {
+        return res.status(400).json({
+            message: "Please enter title or content."
         });
-    }).catch((err) => {
-        return res.status(500).json({ err });
-    });
+    } else {
+        Content.update({
+            title: title,
+            content: content,
+            tag: tag,
+            stack: stack,
+        }, {
+            where: { id: contentid },
+        }).then(() => {
+            return res.status(200).json({ 
+                code: 200,
+                message: "Content update success."
+            });
+        }).catch((err) => {
+            return res.status(500).json({ err });
+        });
+    }
 }
 
 // 글 삭제
