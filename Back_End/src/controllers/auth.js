@@ -41,12 +41,17 @@ exports.register = (req, res, next) => {
             });
         }
         else { // 찾는 이메일이 없을 경우 (중복 X)
-            if ( email === "" ) {
+            if ( username === "" ) {
+                return res.status(405).json({
+                    message: "Empty username.",
+                });
+            }
+            else if ( email === "" ) {
                 return res.status(405).json({
                     message: "Empty email.",
                 });
             }
-            else if (password === "") {
+            else if ( password === "" ) {
                 return res.status(405).json({
                     message: "Empty password.",
                 });
