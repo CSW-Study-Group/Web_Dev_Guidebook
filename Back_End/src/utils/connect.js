@@ -2,6 +2,7 @@
 
 const Sequelize = require('sequelize');
 const config = require('config');
+
 const User = require('../models/user');
 const Content = require('../models/content');
 const Comment = require('../models/comment');
@@ -17,6 +18,7 @@ const sequelize = new Sequelize(
 const db = {};
 
 db.sequelize = sequelize;
+
 db.User = User;
 db.Content = Content;
 db.Comment = Comment;
