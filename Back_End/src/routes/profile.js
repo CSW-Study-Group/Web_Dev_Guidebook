@@ -3,7 +3,6 @@
 const express = require('express');
 const ctrl = require('../controllers/profile');
 const verifyJWT = require('../middleware/verifyJWT');
-
 const router = express.Router();
 
 router.get("/content", verifyJWT.verifyJwtAndNext, ctrl.selfWrittenContent);

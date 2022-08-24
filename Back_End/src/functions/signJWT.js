@@ -5,7 +5,7 @@ const config = require('config');
 const ACCESS_SECRET_KEY = config.get('JWT.access_secret_key');
 const REFRESH_SECRET_KEY = config.get('JWT.refresh_secret_key');
 
-const signJWT = {
+const signJwt = {
     access(payload) {
         return jwt.sign(payload, ACCESS_SECRET_KEY, {
             expiresIn: '15m',
@@ -34,4 +34,4 @@ const signJWT = {
     }
 };
 
-module.exports = signJWT;
+module.exports = signJwt;

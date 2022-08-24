@@ -3,17 +3,19 @@
 const { Content } = require('../utils/connect');
 const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
+
 const model = require('../utils/connect');
 const HitContent = model.sequelize.models.HitContent;
+
 const { Op } = require('sequelize');
 
-
+// stack에 따른 tag 별 글 데이터들 제공
 exports.contentGetByStack = (req, res) => {
     const { stack } = req.params;
     const { sort } = req.query;
     let order = null;
 
-    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
     Content.findAndCountAll({
@@ -25,8 +27,8 @@ exports.contentGetByStack = (req, res) => {
         let share = new Array();
 
         for( let i = 0; i < data.count ; i++ ) {
-            if(data.rows[i].tag === "tip") { tip.push(data.rows[i]) }
-            else if(data.rows[i].tag === "question") { question.push(data.rows[i]) } 
+            if (data.rows[i].tag === 'tip') { tip.push(data.rows[i]) }
+            else if (data.rows[i].tag === 'question') { question.push(data.rows[i]) } 
             else { share.push(data.rows[i]) } // share
         }
 
@@ -40,25 +42,26 @@ exports.contentGetByStack = (req, res) => {
     });
 };
 
+// stack page에서의 하위 검색 후, 페이지를 제한
 exports.searchPart = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
     const { stack } = req.params;
     const { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
-    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
+    if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
         where_user = {
             stack: stack,
-            [type]: {[Op.like]: "%"+content+"%"}
+            [type]: {[Op.like]: '%'+content+'%'}
         }
     } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
         where_content = {
             stack: stack,
-            [type]: {[Op.like]: "%"+content+"%"}
+            [type]: {[Op.like]: '%'+content+'%'}
         }
     }
 
-    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
 
@@ -82,18 +85,19 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
     });
 };
 
+// 어디서든 전체 검색 후, 페이지를 제한
 exports.searchAll = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
     const { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
-    if ( type === "username" ) { // 검색조건 username => User model에서 찾음. where_user 사용
-        where_user = {[type]: {[Op.like]: "%"+content+"%"}};
+    if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
+        where_user = {[type]: {[Op.like]: '%'+content+'%'}};
     } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
-        where_content = {[type]: {[Op.like]: "%"+content+"%"}};
+        where_content = {[type]: {[Op.like]: '%'+content+'%'}};
     }
 
-    if (sort === "hit") { order = [ ['hit', 'DESC'] ]; }
+    if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
     Content.findAndCountAll({
@@ -116,6 +120,7 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
     });
 };
 
+// 작성글 보기 
 exports.contentRead = (req, res) => {
     Content.findOne({ where: { id: req.params.contentid } })
     .then((data) => {
@@ -128,6 +133,7 @@ exports.contentRead = (req, res) => {
     });
 }
 
+// 글 작성
 exports.contentPost = (req, res, next) => {
     let { title, content, tag, stack, userid } = req.body;
 
@@ -148,7 +154,7 @@ exports.contentPost = (req, res, next) => {
         }).then(() => {
             return res.status(200).json({ 
                 code: 200,
-                message: "content post success."
+                message: "Content post success."
             });
         }).catch((err) => {
             return res.status(500).json({ err });
@@ -156,6 +162,7 @@ exports.contentPost = (req, res, next) => {
     }
 };
 
+// 글 수정
 exports.contentUpdate = (req, res) => {
     let { title, content, tag, stack } = req.body;
     let contentid = req.params.contentid;
@@ -170,27 +177,29 @@ exports.contentUpdate = (req, res) => {
     }).then(() => {
         return res.status(200).json({ 
             code: 200,
-            message: "content update success."
+            message: "Content update success."
         });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
 }
 
+// 글 삭제
 exports.contentDelete = (req, res) => {
     Content.destroy({where: { id: req.params.contentid }})
     .then(() => {
         return res.status(200).json({ 
             code: 200,
-            message: "content delete success."
+            message: "Content delete success."
         });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
 }
 
+// 인증
 exports.auth = (req, res) => {
-    let userid = req.params.userid
+    let userid = req.params.userid;
     let contentid = req.params.contentid;
 
     Content.findOne({ 
@@ -198,15 +207,15 @@ exports.auth = (req, res) => {
         where: { id: contentid }
     })
     .then((data) => {
-        if(parseInt(userid) === data.userkey) {
+        if( parseInt(userid) === data.userkey ) {
             return res.status(200).json({ 
                 code: 200,
-                message: "auth success."
+                message: "Auth success."
             });
         } else {
             return res.status(401).json({ 
                 code: 401,
-                message: "auth fail."
+                message: "Auth fail."
             });
         }
     }).catch((err) => {
@@ -214,6 +223,7 @@ exports.auth = (req, res) => {
     });
 }
 
+// 댓글 작성
 exports.commentPost = (req, res, next) => {
     let { content } = req.body;
     let contentid = req.params.contentid;
@@ -232,7 +242,7 @@ exports.commentPost = (req, res, next) => {
         }).then(() => {
             return res.status(200).json({ 
                 code: 200,
-                message: "comment post success."
+                message: "Comment post success."
             });
         }).catch((err) => {
             return res.status(500).json({ err });
@@ -240,7 +250,8 @@ exports.commentPost = (req, res, next) => {
     }
 };
 
-exports.hit = (req, res) => {
+// 추천
+exports.contentHit = (req, res) => {
     let contentid = req.params.contentid;
     let userkey = req.decoded.id;
 
@@ -255,7 +266,7 @@ exports.hit = (req, res) => {
             }).then(() => {
                 return res.status(200).json({ 
                     code: 200,
-                    message: "hit success."
+                    message: "Hit success."
                 });
             }).catch((err) => {
                 return res.status(500).json({ err });
@@ -264,13 +275,13 @@ exports.hit = (req, res) => {
         else {
             HitContent.destroy({ 
                 where: { 
-                    ContentId: contentid,
-                    UserId: userkey
+                    UserId: userkey,
+                    ContentId: parseInt(contentid)
                 }
             }).then(() => {
                 return res.status(200).json({ 
                     code: 200,
-                    message: "hit delete."
+                    message: "Hit delete."
                 });
             }).catch((err) => {
                 return res.status(500).json({ err });
