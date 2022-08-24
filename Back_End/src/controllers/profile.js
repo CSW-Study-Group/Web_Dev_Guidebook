@@ -55,12 +55,18 @@ exports.profileUpdate = (req, res) => {
     let { username, password, re_password } = req.body; 
     let id = req.decoded.id;
 
+    if(!username) { 
+        return res.status(400).json({ // 이름이 공백으로 보내진경우
+            message: "Please enter username."
+        });
+    }
+
     User.findOne({ where: { username: {[ Op.eq ]: username }}})
     .then(( name_check ) => {
-        if ( !name_check || name_check.id !== id ) {
+        if ( name_check && name_check.id !== id ) {
             //이름중복인경우
             return res.status(405).json({
-                message: "Name is already use or name is empty."
+                message: "Name is already use "
             });
         } else {
             // 이름중복 X
@@ -69,7 +75,7 @@ exports.profileUpdate = (req, res) => {
                 if ( !password ) { password = profile.password; } 
                 else { 
                     if ( password !== re_password ) {
-                        return res.status(405).json({
+                        return res.status(400).json({
                             message: "Incorrect password."
                         });
                     }
