@@ -122,15 +122,19 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
 
 // 작성글 보기 
 exports.contentRead = (req, res) => {
-    Content.findOne({ where: { id: req.params.contentid } })
+    let contentid = req.params.contentid;
+
+    Content.findOne({ where: { id: contentid } })
     .then((data) => {
         return res.status(200).json({ 
             code: 200,
-            data: data
+            data: data,
         });
     }).catch((err) => {
         return res.status(500).json({ err });
     });
+
+    Content.increment({ view: 1 }, { where: {id: {[ Op.eq ]: contentid }}});
 }
 
 // 글 작성
@@ -291,7 +295,7 @@ exports.contentHit = (req, res) => {
                     code: 200,
                     message: "Hit delete."
                 });
-            }).catch((err) => {
+            }).catch((err) => { 
                 return res.status(500).json({ err });
             });
 
