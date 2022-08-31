@@ -277,6 +277,8 @@ exports.contentHit = (req, res) => {
             }).catch((err) => {
                 return res.status(500).json({ err });
             });
+
+            Content.increment({ hit: 1 }, { where: {id: {[ Op.eq ]: contentid }}});
         }
         else {
             HitContent.destroy({ 
@@ -292,6 +294,8 @@ exports.contentHit = (req, res) => {
             }).catch((err) => {
                 return res.status(500).json({ err });
             });
+
+            Content.increment({ hit: -1 }, { where: { id: {[ Op.eq ]: contentid }}});
         }
     }).catch((err) => {
         return res.status(500).json({ err });
