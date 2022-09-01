@@ -2,13 +2,14 @@
 
 const { User } = require('../utils/connect');
 const signJwt = require('../functions/signJWT');
+const bcrypt = require('bcrypt');
 
 exports.login = (req, res, next) => {
     let { email, password } = req.body;
     User.findOne({ where: { email: email }}).then( async (user) => {
         if ( user ) {
-            /* 이슈 1. 암호화로 비밀번호 검증하는 코드 삽입해야함. 일단 if문으로 대체 */
-            if ( password !== user.password ) {
+            const match = await bcrypt.compare(password, user.password);
+            if ( !match ) {
                 return res.status(405).json({
                     message: "Incorrect password."
                 });
@@ -34,7 +35,7 @@ exports.login = (req, res, next) => {
 
 exports.register = (req, res, next) => {
     let { email, password, username } = req.body;
-    User.findOne({ where: { email: email }}).then(( email_check ) => {
+    User.findOne({ where: { email: email }}).then( async ( email_check ) => {
         if ( email_check ) {
             return res.status(405).json({
                 message: "Exist email.",
@@ -56,15 +57,16 @@ exports.register = (req, res, next) => {
                     message: "Empty password.",
                 });
             }
-            /* 비밀번호 암호화 필요 */
             else {
+                const encrypted_pw = await bcrypt.hash(password, 10);
+
                 User.create({
                     username: username,
                     email: email,
-                    password: password,
+                    password: encrypted_pw,
                 }).then(() => {
                     return res.status(200).json({
-                        message: "register success.",
+                        message: "Register success.",
                     });
                 }).catch((err) => { return res.status(500).json({ err }); });
             }
