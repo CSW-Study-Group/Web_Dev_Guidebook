@@ -46,7 +46,7 @@ exports.contentGetByStack = (req, res) => {
 exports.searchPart = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
     const { stack } = req.params;
-    const { type, content, sort, page, limit } = req.query;
+    let { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
     if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
@@ -64,6 +64,8 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
     if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
+    page = !isNaN(page)?page:1;
+    limit = !isNaN(limit)?limit:10;
 
     Content.findAndCountAll({
         include:[{
@@ -73,12 +75,12 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
         }],
         where: where_content,
         order: order,
-        limit: parseInt(limit),
-        offset: (parseInt(page) - 1) * parseInt(limit)
+        limit: Math.max(1, parseInt(limit)),
+        offset: (Math.max(1, parseInt(page)) - 1) * Math.max(1, parseInt(limit))
     }).then((data) => {
         return res.status(200).json({ 
             data: data.rows,
-            maxPage: Math.ceil(data.count / parseInt(limit))
+            maxPage: Math.ceil(data.count / Math.max(1, parseInt(limit)))
         });
     }).catch((err) => {
         return res.status(500).json({ err });
@@ -88,7 +90,7 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
 // 어디서든 전체 검색 후, 페이지를 제한
 exports.searchAll = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
-    const { type, content, sort, page, limit } = req.query;
+    let { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
     if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
@@ -100,6 +102,9 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
     if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
     else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
+    page = !isNaN(page)?page:1;
+    limit = !isNaN(limit)?limit:10;
+
     Content.findAndCountAll({
         include:[{
             model: User,
@@ -108,12 +113,12 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
         }],
         where: where_content,
         order: order,
-        limit: parseInt(limit),
-        offset: (parseInt(page) - 1) * parseInt(limit)
+        limit: Math.max(1, parseInt(limit)),
+        offset: (Math.max(1, parseInt(page)) - 1) * Math.max(1, parseInt(limit))
     }).then((data) => {
         return res.status(200).json({ 
             data: data.rows,
-            maxPage: Math.ceil(data.count / parseInt(limit))
+            maxPage: Math.ceil(data.count / Math.max(1, parseInt(limit)))
         });
     }).catch((err) => {
         return res.status(500).json({ err });

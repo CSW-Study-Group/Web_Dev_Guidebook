@@ -6,17 +6,21 @@ const { User } = require('../utils/connect');
 const { Op } = require('sequelize');
 
 exports.selfWrittenContent = (req, res) => {
-    const { page, limit } = req.query;
+    let { page, limit } = req.query;
     let userkey = req.decoded.id;
+
+    page = !isNaN(page)?page:1;
+    limit = !isNaN(limit)?limit:10;
+
     Content.findAndCountAll({
         where: { userkey: userkey },
-        limit: parseInt(limit),
-        offset: (parseInt(page) - 1) * parseInt(limit)
+        limit: Math.max(1, parseInt(limit)),
+        offset: (Math.max(1, parseInt(page)) - 1) * Math.max(1, parseInt(limit))
     })
         .then((data) => {
             return res.status(200).json({
                 data: data.rows,
-                maxPage: Math.ceil(data.count / parseInt(limit))
+                maxPage: Math.ceil(data.count / Math.max(1, parseInt(limit)))
             });
         })
         .catch((err) => {
@@ -25,17 +29,21 @@ exports.selfWrittenContent = (req, res) => {
 };
 
 exports.selfWrittenComment = (req, res) => {
-    const { page, limit } = req.query;
+    let { page, limit } = req.query;
     let userkey = req.decoded.id;
+
+    page = !isNaN(page)?page:1;
+    limit = !isNaN(limit)?limit:10;
+
     Comment.findAndCountAll({
         where: { userkey: userkey },
-        limit: parseInt(limit),
-        offset: (parseInt(page) - 1) * parseInt(limit)
+        limit: Math.max(1, parseInt(limit)),
+        offset: (Math.max(1, parseInt(page)) - 1) * Math.max(1, parseInt(limit))
     })
         .then((data) => {
             return res.status(200).json({
                 data: data.rows,
-                maxPage: Math.ceil(data.count / parseInt(limit))
+                maxPage: Math.ceil(data.count / Math.max(1, parseInt(limit)))
             });
         })
         .catch((err) => {
