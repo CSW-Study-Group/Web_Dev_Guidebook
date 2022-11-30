@@ -1,25 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserLogin } from 'module/auth/action';
+import { rootReducerType } from 'module/types';
 import * as ui from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { requestLogin } from 'utils/request';
-
 const Login = () => {
-	const [email, setEmail] = useState<String>('');
-	const [password, setPassword] = useState<String>('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
+	const msg = useSelector((state: rootReducerType) => state.authReducer.message);
+	const dispatch = useDispatch();
 	let navigate = useNavigate()
+
+	useEffect(() => {
+		console.log(msg)
+	}, [msg]);
+
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
     }
 
 	const _handleLogin = () => {
-		requestLogin(email, password).then((response) => {
-			console.log(response);
-		}).catch((error) => {
-			console.log(error);
-		});
+		dispatch<any>(fetchUserLogin(email, password));
 	};
 
 	return (
