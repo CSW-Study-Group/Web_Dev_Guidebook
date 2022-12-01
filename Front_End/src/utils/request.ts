@@ -13,6 +13,10 @@ const requestRegister = (username: String, email: String, password: String) => {
         'password': password,
 })}
 
+const requestBoardList = () => {
+    
+}
+
 export {
     requestLogin,
     requestRegister,

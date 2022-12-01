@@ -8,6 +8,9 @@ const Content = require('../models/content');
 const Comment = require('../models/comment');
 
 // new Sequelize를 통해 MySQL 연결 객체를 생성한다.
+
+const host = 'aws' // mysql, aws
+
 const sequelize = new Sequelize(
     config.get('aws.database'),
     config.get('aws.username'),

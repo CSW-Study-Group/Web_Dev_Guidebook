@@ -1,25 +1,40 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserLogin, fetchUserLoginReset } from 'module/auth/action';
+import { rootReducerType } from 'module/types';
 import * as ui from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { requestLogin } from 'utils/request';
-
 const Login = () => {
-	const [email, setEmail] = useState<String>('');
-	const [password, setPassword] = useState<String>('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
 
+	const msg = useSelector((state: rootReducerType) => state.authReducer.message);
+	const dispatch = useDispatch();
 	let navigate = useNavigate()
+
+	// 로그인 제어
+	useEffect(() => {
+		if (msg === 'Authorize success.') {
+			alert("로그인에 성공하였습니다.");
+			_handleNavigate('home');
+		}
+		else if (msg === 'Unauthorized email.') {
+			alert("아이디를 확인해주세요.");
+		}
+		else if (msg === 'Incorrect password.') {
+			alert("비밀번호가 일치하지 않습니다.");
+		}
+		return dispatch<any>(fetchUserLoginReset());
+	}, [msg]);
+
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
     }
 
 	const _handleLogin = () => {
-		requestLogin(email, password).then((response) => {
-			console.log(response);
-		}).catch((error) => {
-			console.log(error);
-		});
+		dispatch<any>(fetchUserLogin(email, password));
 	};
 
 	return (
