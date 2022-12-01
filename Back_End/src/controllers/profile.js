@@ -62,6 +62,8 @@ exports.profileUpdate = (req, res) => {
         decoded{id} => JWT 통과이후
     }
     */
+    let image;
+    if(req.file) image = req.file.location;
     let { username, password, re_password } = req.body; 
     let id = req.decoded.id;
 
@@ -82,27 +84,36 @@ exports.profileUpdate = (req, res) => {
             // 이름중복 X
             User.findOne({ where: {id: {[ Op.eq ]: id }}})
             .then(async (profile) => {
-                if ( !password ) { password = profile.password; } 
-                else { 
-                    if ( password !== re_password ) {
-                        return res.status(400).json({
-                            message: "Incorrect password."
-                        });
-                    }
-                }
-                const encrypted_pw = await bcrypt.hash(password, 10);
+                if ( !image ) { image = profile.image; } 
 
-                User.update({
-                        username: username,
-                        password: encrypted_pw
-                    },{ where: {id: id} }
-                )
-                .then(( data ) => {
-                    return res.status(200).json({ data });
-                })
-                .catch(( err ) => {
-                    return res.status(500).json({ err });
-                });
+                if (!password) { 
+                        User.update({
+                            username: username,
+                            profile: image,
+                        },{ where: {id: id} }
+                    ).then(( data ) => {
+                        return res.status(200).json({ data });
+                    }).catch(( err ) => {
+                        return res.status(500).json({ err });
+                    });
+                } else if ( password !== re_password ) {
+                    return res.status(400).json({
+                        message: "Incorrect password."
+                    });
+                } else {            
+                    const encrypted_pw = await bcrypt.hash(password, 10);
+                    
+                    User.update({
+                            username: username,
+                            password: encrypted_pw,
+                            profile: image,
+                        },{ where: {id: id} }
+                    ).then(( data ) => {
+                        return res.status(200).json({ data });
+                    }).catch(( err ) => {
+                        return res.status(500).json({ err });
+                    });
+                }
             });
         }
     });
