@@ -5,6 +5,8 @@ const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
 const { Op } = require('sequelize');
 
+const bcrypt = require('bcrypt');
+
 exports.selfWrittenContent = (req, res) => {
     let { page, limit } = req.query;
     let userkey = req.decoded.id;
@@ -74,12 +76,12 @@ exports.profileUpdate = (req, res) => {
         if ( name_check && name_check.id !== id ) {
             //이름중복인경우
             return res.status(405).json({
-                message: "Name is already use "
+                message: "Name is already use."
             });
         } else {
             // 이름중복 X
             User.findOne({ where: {id: {[ Op.eq ]: id }}})
-            .then((profile) => {
+            .then(async (profile) => {
                 if ( !password ) { password = profile.password; } 
                 else { 
                     if ( password !== re_password ) {
@@ -88,9 +90,11 @@ exports.profileUpdate = (req, res) => {
                         });
                     }
                 }
+                const encrypted_pw = await bcrypt.hash(password, 10);
+
                 User.update({
                         username: username,
-                        password: password
+                        password: encrypted_pw
                     },{ where: {id: id} }
                 )
                 .then(( data ) => {

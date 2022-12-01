@@ -8,7 +8,7 @@ const REFRESH_SECRET_KEY = config.get('JWT.refresh_secret_key');
 const signJwt = {
     access(payload) {
         return jwt.sign(payload, ACCESS_SECRET_KEY, {
-            expiresIn: '15m',
+            expiresIn: '1h',
             issuer: config.get('JWT.issuer'),
         });
     },
