@@ -1,6 +1,7 @@
 "use strict";
 
 const Sequelize = require('sequelize');
+const config = require('config');
 
 module.exports = class User extends Sequelize.Model {
     static init(sequelize) {
@@ -24,6 +25,11 @@ module.exports = class User extends Sequelize.Model {
                 password: {
                     type: Sequelize.STRING(100),
                     allowNull: false,
+                },
+                profile: {
+                    type: Sequelize.STRING(100),
+                    allowNull: true,
+                    defaultValue: config.get('s3.basic_image'),
                 }
             },
             {  // 테이블 자체에 대한 설정

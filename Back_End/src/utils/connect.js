@@ -12,10 +12,10 @@ const Comment = require('../models/comment');
 const host = 'aws' // mysql, aws
 
 const sequelize = new Sequelize(
-    config.get(`${host}.database`),
-    config.get(`${host}.username`),
-    config.get(`${host}.password`),
-    { host: config.get(`${host}.host`), dialect: config.get(`${host}.dialect`) }
+    config.get('aws.database'),
+    config.get('aws.username'),
+    config.get('aws.password'),
+    { host: config.get('aws.host'), dialect: config.get('aws.dialect'), port: config.get('aws.port') }
 );
 
 const db = {};

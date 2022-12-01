@@ -5,6 +5,8 @@ const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
 const { Op } = require('sequelize');
 
+const bcrypt = require('bcrypt');
+
 exports.selfWrittenContent = (req, res) => {
     let { page, limit } = req.query;
     let userkey = req.decoded.id;
@@ -60,6 +62,8 @@ exports.profileUpdate = (req, res) => {
         decoded{id} => JWT 통과이후
     }
     */
+    let image;
+    if(req.file) image = req.file.location;
     let { username, password, re_password } = req.body; 
     let id = req.decoded.id;
 
@@ -74,31 +78,42 @@ exports.profileUpdate = (req, res) => {
         if ( name_check && name_check.id !== id ) {
             //이름중복인경우
             return res.status(405).json({
-                message: "Name is already use "
+                message: "Name is already use."
             });
         } else {
             // 이름중복 X
             User.findOne({ where: {id: {[ Op.eq ]: id }}})
-            .then((profile) => {
-                if ( !password ) { password = profile.password; } 
-                else { 
-                    if ( password !== re_password ) {
-                        return res.status(400).json({
-                            message: "Incorrect password."
-                        });
-                    }
+            .then(async (profile) => {
+                if ( !image ) { image = profile.image; } 
+
+                if (!password) { 
+                        User.update({
+                            username: username,
+                            profile: image,
+                        },{ where: {id: id} }
+                    ).then(( data ) => {
+                        return res.status(200).json({ data });
+                    }).catch(( err ) => {
+                        return res.status(500).json({ err });
+                    });
+                } else if ( password !== re_password ) {
+                    return res.status(400).json({
+                        message: "Incorrect password."
+                    });
+                } else {            
+                    const encrypted_pw = await bcrypt.hash(password, 10);
+                    
+                    User.update({
+                            username: username,
+                            password: encrypted_pw,
+                            profile: image,
+                        },{ where: {id: id} }
+                    ).then(( data ) => {
+                        return res.status(200).json({ data });
+                    }).catch(( err ) => {
+                        return res.status(500).json({ err });
+                    });
                 }
-                User.update({
-                        username: username,
-                        password: password
-                    },{ where: {id: id} }
-                )
-                .then(( data ) => {
-                    return res.status(200).json({ data });
-                })
-                .catch(( err ) => {
-                    return res.status(500).json({ err });
-                });
             });
         }
     });
