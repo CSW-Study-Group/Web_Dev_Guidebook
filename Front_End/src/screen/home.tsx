@@ -10,6 +10,12 @@ const Home = () => {
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
     }
+
+    const _handleBoard = (router: String, stack: String) => {
+        // 토큰 검증
+        // 라우터 이동
+        // 리덕스 스토어 코드
+    }
   return (
     <div>
         <ui.CssBaseline />
@@ -56,7 +62,7 @@ const Home = () => {
                             </ui.Typography>
                         </ui.CardContent>
                         <ui.CardActions>
-                            <ui.Button>게시글 보기</ui.Button>
+                            <ui.Button onClick={() => _handleNavigate('board')}>게시글 보기</ui.Button>
                         </ui.CardActions>
                         </ui.Card>
                     </ui.Grid>
