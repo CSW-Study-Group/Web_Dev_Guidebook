@@ -6,7 +6,7 @@ const verifyJWT = require('../middleware/verifyJWT');
 const router = express.Router();
 
 router.get("/content/stack/:stack", ctrl.contentGetByStack); // 스택
-router.get("/content/stack/:stack/search", ctrl.searchPart); // 스택 - 부분검색
+router.get("/content/stack/:stack/:tag/search", ctrl.searchPart); // 스택 - 부분검색
 router.get("/content/searchall", ctrl.searchAll); // 전체검색
 
 router.get("/content/:contentid", ctrl.contentRead); // Read
