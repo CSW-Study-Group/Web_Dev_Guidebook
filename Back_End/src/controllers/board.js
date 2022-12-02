@@ -51,7 +51,6 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
 
     if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
         where_user = {
-            stack: stack,
             [type]: {[Op.like]: '%'+content+'%'}
         }
     } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
