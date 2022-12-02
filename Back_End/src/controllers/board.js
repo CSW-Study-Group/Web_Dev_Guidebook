@@ -12,15 +12,15 @@ const { Op } = require('sequelize');
 // stack에 따른 tag 별 글 데이터들 제공
 exports.contentGetByStack = (req, res) => {
     const { stack } = req.params;
-    const { sort } = req.query;
-    let order = null;
+    // const { sort } = req.query;
+    // let order = null;
 
-    if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
-    else { order = [ ['createdAt', 'DESC'] ]; } // null or other
+    // if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
+    // else { order = [ ['createdAt', 'DESC'] ]; } // null or other
 
     Content.findAndCountAll({
         where: { stack: stack },
-        order: order,
+        order: [ ['createdAt', 'DESC'] ],
     }).then((data) => {
         let tip = new Array();
         let question = new Array();
@@ -45,7 +45,7 @@ exports.contentGetByStack = (req, res) => {
 // stack page에서의 하위 검색 후, 페이지를 제한
 exports.searchPart = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
-    const { stack } = req.params;
+    const { stack, tag } = req.params;
     let { type, content, sort, page, limit } = req.query;
     let where_user, where_content, order = null;
 
@@ -53,11 +53,16 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
         where_user = {
             [type]: {[Op.like]: '%'+content+'%'}
         }
+        where_content = {[Op.and]: [
+            { stack: stack},
+            { tag: tag },
+        ]}
     } else { // 그 외 검색조건 Content model에서 찾음. where_content 사용
-        where_content = {
-            stack: stack,
-            [type]: {[Op.like]: '%'+content+'%'}
-        }
+        where_content = {[Op.and]: [
+            { stack: stack},
+            { tag: tag },
+            {[type]: {[Op.like]: '%'+content+'%'}}
+        ]}
     }
 
     if (sort === 'hit') { order = [ ['hit', 'DESC'] ]; }
