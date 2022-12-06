@@ -4,6 +4,8 @@ const { User } = require('../utils/connect');
 const signJwt = require('../functions/signJWT');
 const bcrypt = require('bcrypt');
 
+const { Op } = require('sequelize');
+
 exports.login = (req, res, next) => {
     let { email, password } = req.body;
     User.findOne({ where: { email: email }}).then( async (user) => {
@@ -35,12 +37,16 @@ exports.login = (req, res, next) => {
 
 exports.register = (req, res, next) => {
     let { email, password, username } = req.body;
-    User.findOne({ where: { email: email }}).then( async ( email_check ) => {
-        if ( email_check ) {
+    User.findOne({ where: {[Op.or]: [
+        { email: email },
+        { username: username }
+    ]}}).then( async ( unique_check ) => {
+        if ( unique_check ) {
             return res.status(405).json({
-                message: "Exist email.",
+                message: "Exist email or username.",
             });
         }
+        
         else { // 찾는 이메일이 없을 경우 (중복 X)
             if ( username === "" ) {
                 return res.status(405).json({
