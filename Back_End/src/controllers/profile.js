@@ -92,7 +92,7 @@ exports.profileUpdate = (req, res) => {
                             profile: image,
                         },{ where: {id: id} }
                     ).then(( data ) => {
-                        return res.status(200).json({ data });
+                        return res.status(200).json({ message: "Profile changed." });
                     }).catch(( err ) => {
                         return res.status(500).json({ err });
                     });
@@ -109,7 +109,7 @@ exports.profileUpdate = (req, res) => {
                             profile: image,
                         },{ where: {id: id} }
                     ).then(( data ) => {
-                        return res.status(200).json({ data });
+                        return res.status(200).json({ message: "Profile changed." });
                     }).catch(( err ) => {
                         return res.status(500).json({ err });
                     });
