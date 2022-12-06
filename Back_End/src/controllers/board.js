@@ -47,7 +47,6 @@ exports.searchPart = (req, res) => { // username, content, title 조건 검색
     // body{ type: "검색조건" , content: "검색어"} 형태
     const { stack, tag } = req.params;
     let { type, content, sort, page, limit } = req.query;
-    console.log(type);
     let where_user, where_content, order = null;
 
     if ( type === 'username' ) { // 검색조건 username => User model에서 찾음. where_user 사용
