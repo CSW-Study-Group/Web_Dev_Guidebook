@@ -169,8 +169,6 @@ exports.contentPost = (req, res, next) => {
             content: content,
             tag: tag,
             stack: stack,
-            hit: 0,
-            view: 0,
             userkey: userid
         }).then(() => {
             return res.status(200).json({ 

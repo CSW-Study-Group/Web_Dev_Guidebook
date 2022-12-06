@@ -18,24 +18,26 @@ module.exports = class Content extends Sequelize.Model {
                     allowNull: false,
                 },
                 content: {
-                    type: Sequelize.STRING(255),
+                    type: Sequelize.TEXT,
                     allowNull: false,
                 },
                 tag: {
-                    type: Sequelize.STRING(255),
-                    allowNull: false,
+                    type: Sequelize.STRING(20),
+                    allowNull: true,
                 },
                 stack: {
-                    type: Sequelize.STRING(255),
-                    allowNull: false,
+                    type: Sequelize.STRING(20),
+                    allowNull: true,
                 },
                 hit: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
+                    defaultValue: 0,
                 },
                 view: {
                     type: Sequelize.INTEGER,
                     allowNull: false,
+                    defaultValue: 0,
                 }
             },
             {  // 테이블 자체에 대한 설정
