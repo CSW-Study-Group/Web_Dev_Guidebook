@@ -10,3 +10,51 @@ export type User = {
     access_token: string;
     refresh_token: string;
 }
+
+export type boardList = {
+    tip: [
+        {
+            id: Number;
+            title: String;
+            content: String;
+            tag: String;
+            stack: String;
+            hit: Number;
+            view: Number;
+            createdAt: String;
+            updatedAt: String;
+            deletedAt: String;
+            userkey: Number;
+        }
+    ]
+    question: [
+        {
+            id: Number;
+            title: String;
+            content: String;
+            tag: String;
+            stack: String;
+            hit: Number;
+            view: Number;
+            createdAt: String;
+            updatedAt: String;
+            deletedAt: String;
+            userkey: Number;
+        }
+    ]
+    share: [
+        {
+            id: Number;
+            title: String;
+            content: String;
+            tag: String;
+            stack: String;
+            hit: Number;
+            view: Number;
+            createdAt: String;
+            updatedAt: String;
+            deletedAt: String;
+            userkey: Number;
+        }
+    ]
+}

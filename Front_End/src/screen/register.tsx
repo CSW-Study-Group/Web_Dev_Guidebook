@@ -18,13 +18,15 @@ const Register = () => {
 	const _handleRegister = () => {
 		if ( password === passwordCheck ) {
 			requestRegister(username, email, password).then((response) => {
+				alert(`${username}님 환영합니다.`);
 				console.log(response);
 			}).catch((error) => {
-				console.log(error);
+				alert("회원가입에 실패하였습니다.")
+				console.log(error.data);
 			});
 		}
 		else {
-			console.log('pw 불일치')
+			alert("비밀번호가 일치하지 않습니다.");
 		}
 	};
 

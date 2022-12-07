@@ -4,18 +4,24 @@ import * as ui from '@mui/material';
 import Copyright from 'components/copyright';
 import TopBar from 'components/topBar';
 import { cardDb } from 'utils/cardDb';
+import { useDispatch } from 'react-redux';
+import { fetchBoardList } from 'module/board/action';
+import { useSelector } from 'react-redux';
+import { rootReducerType } from 'module/types';
 
 const Home = () => {
-    let navigate = useNavigate()
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
+
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
-    }
+    };
 
     const _handleBoard = (router: String, stack: String) => {
-        // 토큰 검증
-        // 라우터 이동
-        // 리덕스 스토어 코드
-    }
+        _handleNavigate(router);
+        dispatch<any>(fetchBoardList(stack));
+    };
+
   return (
     <div>
         <ui.CssBaseline />
@@ -62,7 +68,7 @@ const Home = () => {
                             </ui.Typography>
                         </ui.CardContent>
                         <ui.CardActions>
-                            <ui.Button onClick={() => _handleNavigate('board')}>게시글 보기</ui.Button>
+                            <ui.Button onClick={() => _handleBoard('home/board', card.cardName)}>게시글 보기</ui.Button>
                         </ui.CardActions>
                         </ui.Card>
                     </ui.Grid>

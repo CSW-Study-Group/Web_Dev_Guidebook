@@ -10,9 +10,10 @@ const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const msg = useSelector((state: rootReducerType) => state.authReducer.message);
 	const dispatch = useDispatch();
-	let navigate = useNavigate()
+	let navigate = useNavigate();
+
+	const msg = useSelector((state: rootReducerType) => state.authReducer.message);
 
 	// 로그인 제어
 	useEffect(() => {

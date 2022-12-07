@@ -2,7 +2,6 @@ import { userInfo } from './state';
 import { USERLOGIN_SUCCESS, USERLOGIN_FAILURE, USERLOGIN_RESET } from './type';
 
 const authReducer = (state = userInfo, action: any) => {
-    console.log('asdfasdfas', action.payload)
     switch (action.type) {
         case USERLOGIN_SUCCESS: {
             return {

@@ -1,15 +1,30 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { rootReducerType } from 'module/types';
 import * as ui from '@mui/material';
 import Copyright from 'components/copyright';
 import TopBar from 'components/topBar';
 import { cardDb } from 'utils/cardDb';
+import { fetchBoardListReset } from 'module/board/action';
 
 const Board = () => {
     let navigate = useNavigate()
+    const dispatch = useDispatch();
+
+    const boardList = useSelector((state: rootReducerType) => state.boardReducer.boardList);
+
+    useEffect(() => {
+      return () => {
+        console.log('초기화 작동');
+        dispatch<any>(fetchBoardListReset());
+      }
+    }, [])
+
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
     }
+
   return (
     <div>
         <ui.CssBaseline />
@@ -23,7 +38,7 @@ const Board = () => {
                     color="text.primary"
                     gutterBottom
                 >
-                Node.js
+                    {boardList.tip[0].stack}
                 </ui.Typography>
             </ui.Container>
             <ui.Container>
@@ -36,115 +51,22 @@ const Board = () => {
                             <ui.List
                                   sx={{
                                     width: '100%',
+                                    height: 450,
                                     maxWidth: 360,
                                     bgcolor: 'background.paper',
                                     overflow: 'auto',
-                                    maxHeight: 360,
-                                  }}>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        1
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        2
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        3
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        4
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        5
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        6
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        7
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
+                            }}>
+                                {boardList.tip.map((item: any, key: any) =>
+                                    <ui.ListItem disablePadding>
+                                        <ui.ListItemButton>
+                                            <ui.ListItemIcon>
+                                                {key + 1}
+                                            </ui.ListItemIcon>
+                                            <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
+                                        </ui.ListItemButton>
+                                    </ui.ListItem>
+                                )}
                             </ui.List>
-                            <ui.Grid sx={{ width: '50%' }} container>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        1
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        2
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        3
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        4
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        5
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        6
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        7
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        8
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        9
-                                    </ui.Link>
-                                </ui.Grid>
-                            </ui.Grid>
                         </ui.Box>
                     </ui.Grid>
                     <ui.Grid item xs>
@@ -155,115 +77,22 @@ const Board = () => {
                             <ui.List
                                   sx={{
                                     width: '100%',
+                                    height: 450,
                                     maxWidth: 360,
                                     bgcolor: 'background.paper',
                                     overflow: 'auto',
-                                    maxHeight: 360,
-                                  }}>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        1
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        2
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        3
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        4
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        5
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        6
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        7
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
+                            }}>
+                                {boardList.question.map((item: any, key: any) =>
+                                    <ui.ListItem disablePadding>
+                                        <ui.ListItemButton>
+                                            <ui.ListItemIcon>
+                                                {key + 1}
+                                            </ui.ListItemIcon>
+                                            <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
+                                        </ui.ListItemButton>
+                                    </ui.ListItem>
+                                )}
                             </ui.List>
-                            <ui.Grid sx={{ width: '50%' }} container>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        1
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        2
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        3
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        4
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        5
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        6
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        7
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        8
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        9
-                                    </ui.Link>
-                                </ui.Grid>
-                            </ui.Grid>
                         </ui.Box>
                     </ui.Grid>
                     <ui.Grid item xs>
@@ -274,115 +103,22 @@ const Board = () => {
                             <ui.List
                                   sx={{
                                     width: '100%',
+                                    height: 450,
                                     maxWidth: 360,
                                     bgcolor: 'background.paper',
                                     overflow: 'auto',
-                                    maxHeight: 360,
-                                  }}>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        1
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        2
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        3
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        4
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        5
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        6
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
-                                <ui.ListItem disablePadding>
-                                    <ui.ListItemButton>
-                                    <ui.ListItemIcon>
-                                        7
-                                    </ui.ListItemIcon>
-                                    <ui.ListItemText primary="게시글입니다 안녕하세요." />
-                                    </ui.ListItemButton>
-                                </ui.ListItem>
+                            }}>
+                                {boardList.share.map((item: any, key: any) =>
+                                    <ui.ListItem disablePadding>
+                                        <ui.ListItemButton>
+                                            <ui.ListItemIcon>
+                                                {key + 1}
+                                            </ui.ListItemIcon>
+                                            <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
+                                        </ui.ListItemButton>
+                                    </ui.ListItem>
+                                )}
                             </ui.List>
-                            <ui.Grid sx={{ width: '50%' }} container>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        1
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        2
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        3
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        4
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        5
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        6
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        7
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        8
-                                    </ui.Link>
-                                </ui.Grid>
-                                <ui.Grid item xs>
-                                    <ui.Link variant="body2">
-                                        9
-                                    </ui.Link>
-                                </ui.Grid>
-                            </ui.Grid>
                         </ui.Box>
                     </ui.Grid>
                 </ui.Grid>
