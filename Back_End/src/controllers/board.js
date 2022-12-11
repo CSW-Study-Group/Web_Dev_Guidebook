@@ -140,8 +140,14 @@ exports.searchAll = (req, res) => { // username, content, title 조건 검색
 exports.contentRead = (req, res) => {
     let contentid = req.params.contentid;
 
-    Content.findOne({ where: { id: contentid } })
-    .then((data) => {
+    Content.findOne({ 
+        include:[{
+            model: Comment,
+            required: false, // associated model이 존재하는 객체만을 Return 하지않도록 강제한다.
+            where: { contentkey: contentid }
+        }],
+        where: { id: contentid },
+    }).then((data) => {
         return res.status(200).json({ 
             code: 200,
             data: data,
