@@ -3,6 +3,10 @@
 const { Content } = require('../utils/connect');
 const { Comment } = require('../utils/connect');
 const { User } = require('../utils/connect');
+
+const model = require('../utils/connect');
+const HitContent = model.sequelize.models.HitContent;
+
 const { Op } = require('sequelize');
 
 const bcrypt = require('bcrypt');
@@ -51,6 +55,35 @@ exports.selfWrittenComment = (req, res) => {
         .catch((err) => {
             return res.status(500).json({ err });
         });
+};
+
+exports.userHitContent = (req, res) => {
+    let userkey = req.decoded.id;
+
+    HitContent.findAll({ 
+        attributes: ['ContentId'],
+        where: { UserId: userkey }
+    }).then((data) => {
+        let content_id = [];
+        for (let x = 0; x < data.length; x++) content_id.push(data[x].ContentId);
+        if (content_id.length === 0) {
+            return res.status(404).json({ 
+                code: 404,
+                message: "There is no data.",
+            });
+        }
+
+        Content.findAll({ 
+            where: { id: { [Op.or]: content_id } },
+        }).then((data) => {
+            return res.status(200).json({ 
+                code: 200,
+                data: data,
+            });
+        })
+    }).catch((err) => {
+        return res.status(500).json({ err });
+    });
 };
 
 exports.profileUpdate = (req, res) => {
