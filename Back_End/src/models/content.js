@@ -38,6 +38,10 @@ module.exports = class Content extends Sequelize.Model {
                     type: Sequelize.INTEGER,
                     allowNull: false,
                     defaultValue: 0,
+                },
+                username: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
                 }
             },
             {  // 테이블 자체에 대한 설정

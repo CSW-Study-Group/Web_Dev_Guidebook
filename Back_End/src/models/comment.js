@@ -18,6 +18,10 @@ module.exports = class Comment extends Sequelize.Model{
                     type: Sequelize.STRING(255),
                     allowNull: false,
                 },
+                username: {
+                    type: Sequelize.STRING(20),
+                    allowNull: false,
+                }
             },
             {
                 sequelize,

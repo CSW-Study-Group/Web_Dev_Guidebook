@@ -160,8 +160,9 @@ exports.contentRead = (req, res) => {
 }
 
 // 글 작성
-exports.contentPost = (req, res, next) => {
+exports.contentPost = async (req, res, next) => {
     let { title, content, tag, stack, userid } = req.body;
+    let data;
 
     // 사용자가 title, content입력 안할시 오류 발생
     if(!title || !content) {
@@ -169,12 +170,18 @@ exports.contentPost = (req, res, next) => {
             message: "Please enter title or content."
         });
     } else {
+        data = await User.findOne({
+            where: { id: userid },
+            attributes: ['username']
+        })
+
         Content.create({
             title: title,
             content: content,
             tag: tag,
             stack: stack,
-            userkey: userid
+            userkey: userid,
+            username: data.username
         }).then(() => {
             return res.status(200).json({ 
                 code: 200,
@@ -254,10 +261,11 @@ exports.auth = (req, res) => {
 }
 
 // 댓글 작성
-exports.commentPost = (req, res, next) => {
+exports.commentPost = async (req, res, next) => {
     let { content } = req.body;
     let contentid = req.params.contentid;
     let userkey = req.decoded.id;
+    let data;
 
     // 사용자가 title, content입력 안할시 오류 발생
     if(!content) {
@@ -265,9 +273,15 @@ exports.commentPost = (req, res, next) => {
             message: "Please enter content."
         });
     } else {
+        data = await User.findOne({
+            where: { id: userkey },
+            attributes: ['username']
+        })
+
         Comment.create({
             content: content,
             userkey: userkey,
+            username: data.username,
             contentkey: parseInt(contentid)
         }).then(() => {
             return res.status(200).json({ 
