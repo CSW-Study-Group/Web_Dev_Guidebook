@@ -41,6 +41,9 @@ const Home = () => {
                 <ui.Typography variant="h5" align="center" color="text.secondary" paragraph>
                 원하는 정보를 클릭해주세요!
                 </ui.Typography>
+                <ui.Typography variant="h5" align="center" paragraph>
+                    <ui.Button sx={{ color: 'white' }} variant="contained" onClick={() =>_handleNavigate('home/board/postAdd')}>게시물 작성하기</ui.Button>
+                </ui.Typography>
             </ui.Container>
             <ui.Container sx={{ py: 8 }} maxWidth="md">
                 <ui.Grid container spacing={4}>

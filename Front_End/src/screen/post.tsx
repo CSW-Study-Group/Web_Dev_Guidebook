@@ -5,7 +5,7 @@ import { rootReducerType } from 'module/types';
 import Copyright from 'components/copyright';
 import TopBar from 'components/topBar';
 import Comment from 'components/comment';
-import { requestPostComment } from 'utils/request';
+import { requestPostComment, requestPostHit } from 'utils/request';
 
 const Post = () => {
     const post = useSelector((state: rootReducerType) => state.postReducer.data);
@@ -18,8 +18,16 @@ const Post = () => {
             alert("댓글이 성공적으로 작성되었습니다.");
         }).catch((error) => {
             alert("댓글 작성을 실패하였습니다.");
-        })
-    }
+        });
+    };
+
+    const _handleHit = () => {
+        requestPostHit(post.id, token).then((res) => {
+            alert("해당 게시글을 추천하였습니다.");
+        }).catch((error) => {
+            alert("오류가 발생하였습니다.");
+        });
+    };
 
   return (
     <div>
@@ -52,6 +60,12 @@ const Post = () => {
                 </ui.Grid>
                 <ui.Divider sx={{ mb: 2 }} />
                 <ui.Typography>{post.content}</ui.Typography>
+            </ui.Box>
+        </ui.Box>
+        {/* hit */}
+        <ui.Box sx={{ bgcolor: 'background.paper', pb: 6, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <ui.Box sx={{ bgcolor: 'white', width: '95%', height: '100%', mb: 3, display: 'flex', flexDirection: 'column' }}>
+                <ui.Button variant="outlined" onClick={_handleHit}>추천</ui.Button>
             </ui.Box>
         </ui.Box>
         {/* Comment */}

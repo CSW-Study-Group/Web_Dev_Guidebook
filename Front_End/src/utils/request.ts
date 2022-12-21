@@ -23,8 +23,29 @@ const requestPost = (contentId: String) => {
 
 const requestPostComment = (contentId: String, content: String, token: any) => {
     return request.post(`/board/content/${contentId}/comment`, {
-        content: content
+        content: content,
     }, {
+        headers: {
+            'AUTHORIZATION': token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+}
+
+const requestPostAdd = (title: String, content: String, stack: String, tag: String, userkey: Number) => {
+    return request.post(`/board/content`, {
+        title,
+        content,
+        stack,
+        tag,
+        userkey,
+    });
+}
+
+const requestPostHit = (contentId: String, token: any) => {
+    console.log(token);
+    return request.post(`/board/content/hit/${contentId}`, {
         headers: {
             'AUTHORIZATION': token,
             'Accept': 'application/json',
@@ -39,4 +60,6 @@ export {
     requestBoardList,
     requestPost,
     requestPostComment,
+    requestPostAdd,
+    requestPostHit,
 };
