@@ -37,10 +37,10 @@ const Main = () => {
         {/* Footer */}
         <ui.Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
             <ui.Typography variant="h6" align="center" gutterBottom>
-                푸터 타이틀
+                웹 개발 백과사전
             </ui.Typography>
             <ui.Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-                푸터 상세내용
+                Web Dev Guideline
             </ui.Typography>
             <Copyright />
         </ui.Box>

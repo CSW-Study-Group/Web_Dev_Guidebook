@@ -7,6 +7,7 @@ import Copyright from 'components/copyright';
 import TopBar from 'components/topBar';
 import { cardDb } from 'utils/cardDb';
 import { fetchBoardListReset } from 'module/board/action';
+import { fetchPost } from 'module/post/action';
 
 const Board = () => {
     let navigate = useNavigate()
@@ -16,13 +17,18 @@ const Board = () => {
 
     useEffect(() => {
       return () => {
-        console.log('초기화 작동');
-        dispatch<any>(fetchBoardListReset());
+        // console.log('초기화 작동');
+        // dispatch<any>(fetchBoardListReset());
       }
     }, [])
 
     const _handleNavigate = (name: String) => {
         navigate(`/${name}`);
+    }
+
+    const _handlePost = (contentId: String) => {
+        _handleNavigate('home/board/post');
+        dispatch<any>(fetchPost(contentId));
     }
 
   return (
@@ -58,9 +64,9 @@ const Board = () => {
                             }}>
                                 {boardList.tip.map((item: any, key: any) =>
                                     <ui.ListItem disablePadding>
-                                        <ui.ListItemButton>
+                                        <ui.ListItemButton onClick={() => _handlePost(item.id)}>
                                             <ui.ListItemIcon>
-                                                {key + 1}
+                                                {item.id}
                                             </ui.ListItemIcon>
                                             <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
                                         </ui.ListItemButton>
@@ -84,9 +90,9 @@ const Board = () => {
                             }}>
                                 {boardList.question.map((item: any, key: any) =>
                                     <ui.ListItem disablePadding>
-                                        <ui.ListItemButton>
+                                        <ui.ListItemButton onClick={() => _handlePost(item.id)}>
                                             <ui.ListItemIcon>
-                                                {key + 1}
+                                                {item.id}
                                             </ui.ListItemIcon>
                                             <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
                                         </ui.ListItemButton>
@@ -110,9 +116,9 @@ const Board = () => {
                             }}>
                                 {boardList.share.map((item: any, key: any) =>
                                     <ui.ListItem disablePadding>
-                                        <ui.ListItemButton>
+                                        <ui.ListItemButton onClick={() => _handlePost(item.id)}>
                                             <ui.ListItemIcon>
-                                                {key + 1}
+                                                {item.id}
                                             </ui.ListItemIcon>
                                             <ui.Typography sx={{ width: 250 }} noWrap={true}>{item.title}</ui.Typography>
                                         </ui.ListItemButton>
@@ -128,10 +134,10 @@ const Board = () => {
         {/* Footer */}
         <ui.Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
             <ui.Typography variant="h6" align="center" gutterBottom>
-                푸터 타이틀
+                웹 개발 백과사전
             </ui.Typography>
             <ui.Typography variant="subtitle1" align="center" color="text.secondary" component="p">
-                푸터 상세내용
+                Web Dev Guideline
             </ui.Typography>
             <Copyright />
         </ui.Box>

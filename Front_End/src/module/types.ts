@@ -58,3 +58,20 @@ export type boardList = {
         }
     ]
 }
+
+export type Post = {
+    data: {
+        id: Number;
+        title: String;
+        content: String;
+        tag: String;
+        stack: String
+        hit: Number;
+        view: Number;
+        createdAt: String;
+        updatedAt: String;
+        deletedAt: String;
+        userKey: Number;
+        Comments: any;
+    }
+}
