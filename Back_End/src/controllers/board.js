@@ -161,7 +161,7 @@ exports.contentRead = (req, res) => {
 
 // 글 작성
 exports.contentPost = async (req, res, next) => {
-    let { title, content, tag, stack, userid } = req.body;
+    let { title, content, tag, stack, userkey } = req.body;
     let data;
 
     // 사용자가 title, content입력 안할시 오류 발생
@@ -171,7 +171,7 @@ exports.contentPost = async (req, res, next) => {
         });
     } else {
         data = await User.findOne({
-            where: { id: userid },
+            where: { id: userkey },
             attributes: ['username']
         })
 
@@ -180,7 +180,7 @@ exports.contentPost = async (req, res, next) => {
             content: content,
             tag: tag,
             stack: stack,
-            userkey: userid,
+            userkey: userkey,
             username: data.username
         }).then(() => {
             return res.status(200).json({ 
