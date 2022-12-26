@@ -62,6 +62,7 @@ export type boardList = {
 export type Post = {
     data: {
         id: Number;
+        username: String;
         title: String;
         content: String;
         tag: String;

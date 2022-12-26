@@ -1,6 +1,7 @@
 export const post = {
     data: {
         id: null,
+        username: "",
         title: "",
         content: "",
         tag: "",

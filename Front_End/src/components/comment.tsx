@@ -11,7 +11,7 @@ const Comment = (props: any) => {
                         R
                     </ui.Avatar>
                 }
-                title={props.userkey}
+                title={props.username}
                 subheader={props.createdAt}
             />
             <ui.CardContent sx={{ bgcolor: 'white' }}>

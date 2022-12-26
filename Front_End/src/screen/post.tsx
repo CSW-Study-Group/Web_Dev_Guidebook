@@ -51,7 +51,7 @@ const Post = () => {
             <ui.Box sx={{ bgcolor: 'white', width: '95%', height: 500, padding: 3 }}>
                 <ui.Grid sx={{ mb: 1 }} container spacing={0}>
                     <ui.Grid item xs={10}>
-                        <ui.Typography variant="h6" >작성자 : {post.userkey}</ui.Typography>
+                        <ui.Typography variant="h6" >작성자 : {post.username}</ui.Typography>
                     </ui.Grid>
                     <ui.Grid sx={{ display: 'flex', flexDirection: 'row' }} item xs={2}>
                         <ui.Typography variant="h6" sx={{ mr: 2 }}>추천수 : 1</ui.Typography>
@@ -71,7 +71,7 @@ const Post = () => {
         {/* Comment */}
         <ui.Box sx={{ bgcolor: 'background.paper', pb: 6, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <ui.Box sx={{ bgcolor: 'white', width: '95%', height: '100%', display: 'flex', flexDirection: 'column' }}>
-                {post.Comments.map((item: any, key: any) => <Comment userkey={item.userkey} createdAt={item.createdAt} content={item.content}/>)}
+                {post.Comments.map((item: any, key: any) => <Comment username={item.username} createdAt={item.createdAt} content={item.content}/>)}
             </ui.Box>
         </ui.Box>
         {/* Comment Input */}

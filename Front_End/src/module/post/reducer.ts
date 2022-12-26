@@ -8,6 +8,7 @@ const postReducer = (state = post, action: any) => {
                 ...state,
                 data: {
                     id: action.payload.id,
+                    username: action.payload.username,
                     title: action.payload.title,
                     content: action.payload.content,
                     tag: action.payload.tag,
@@ -33,6 +34,7 @@ const postReducer = (state = post, action: any) => {
                 ...state,
                 data: {
                     id: null,
+                    username: "",
                     title: "",
                     content: "",
                     tag: "",
