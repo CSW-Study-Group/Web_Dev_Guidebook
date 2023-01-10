@@ -15,9 +15,9 @@
 - [Features](#-Features)
 - [API Reference](#-API-Reference)
 - [Database ERD](#-Database-ERD)
-- [Summary Notes](#-Summary-Notes)
 - [Execution Screens](#-Execution-Screens)
 - [Module](#-Dependency-Module)
+- [Summary Notes](#-Summary-Notes)
 
 ## ⚙ Features
 
@@ -72,11 +72,6 @@
 ## ⛓ Database ERD
 <img src="./readme/erd.PNG" width="700" height="500">
 
-## 📓 Summary Notes
-> Click Notion icon
-
-#### 협업 워크스페이션: [![Notion](https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=Notion&logoColor=white)](https://goldenrod-visage-86e.notion.site/6eb6bc9baeeb4a84ad93e0eb960a0775)
-
 ## 💻 Execution Screens
 
 >**Main**
@@ -89,7 +84,7 @@
 
 >**Board**
 
-| ![게시글 생성](./readme/Post.PNG) | ![게시글 읽기](./readme/Show.PNG) | ![게시글 수정](./readme/ComingSoon.PNG) | ![게시글 삭제](./readme/ComingSoon.PNG) |
+| ![게시글 생성](./readme/Post.PNG) | ![게시글 읽기](./readme/Show.PNG) | ![게시글 수정](./readme/ComingSoon.jpg) | ![게시글 삭제](./readme/ComingSoon.jpg) |
 | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------: |
 |                                                      게시글 생성                                                      |                                                       게시글 읽기                                                        |                                                      게시글 수정                                                       |                                                     게시글 삭제                                                      |
 
@@ -114,3 +109,7 @@
     "sequelize-cli": "^6.4.1"
   }
 ```
+
+## 📓 Summary Notes
+> Click Notion icon
+#### 협업 워크스페이션: [![Notion](https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=Notion&logoColor=white)](https://goldenrod-visage-86e.notion.site/6eb6bc9baeeb4a84ad93e0eb960a0775) 👈
