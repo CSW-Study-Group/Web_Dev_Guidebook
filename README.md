@@ -3,10 +3,11 @@
 >**주제** : 웹 개발 정보 전달 커뮤니티
 
 <pre>
-평소 같은 주제의 정보들만 하더라도 수십수백 개의 게시물들이 보이게 됩니다. 이때, 사용자는 무엇이
-제일 효율적이고, 도움이 되는 게시글(자료)인지는 전부 읽어봐야 알고, 동영상 자료라면 전부 시청해야 
-알게 됩니다. 이러한 문제를 해결하고자 나온 아이디어입니다. 즉, 사용자가 좀 더 정보 접근에 있어 
-시간 절약을 할 수 있게 도와주는 웹 사이트 프로젝트를 제작 중입니다.
+평소 같은 주제의 정보들만 하더라도 수십수백 개의 게시물들이 보이게 됩니다. 이때, 사용자는 무엇이 제일 효율적이고, 
+도움이 되는 게시글(자료)인지는 전부 읽어봐야 알고, 동영상 자료라면 전부 시청해야 알게 됩니다. 이러한 문제를 해결
+하고자 나온 아이디어입니다. 
+
+즉, 사용자가 좀 더 정보 접근에 있어 시간 절약을 할 수 있게 도와주는 웹 사이트 프로젝트를 제작 중입니다.
 </pre>
 
 ## 📚 Contents
@@ -74,7 +75,7 @@
 ## 📓 Summary Notes
 > Click Notion icon
 
-#### 협업 워크스페이션: [![Notion](https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=Notion&logoColor=white)](https://quilt-tanker-16d.notion.site/RE-SPEC-1c8f389a7b924283a8c5401e07ff334a)
+#### 협업 워크스페이션: [![Notion](https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=Notion&logoColor=white)](https://goldenrod-visage-86e.notion.site/6eb6bc9baeeb4a84ad93e0eb960a0775)
 
 ## 💻 Execution Screens
 
