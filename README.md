@@ -41,7 +41,7 @@
 
 <summary><b>VIEW APIs 👈</b></summary>
 
-[API01](./readme/API01.PNG)
+![API01](./readme/API01.PNG)
 
 </details>
 
@@ -53,7 +53,7 @@
 
 <summary><b>VIEW APIs 👈</b></summary>
 
-[API02](./readme/API02.PNG)
+![API02](./readme/API02.PNG)
 
 </details>
 
@@ -65,12 +65,12 @@
 
 <summary><b>VIEW APIs 👈</b></summary>
 
-[API03](./readme/API03.PNG)
+![API03](./readme/API03.PNG)
 
 </details>
 
 ## ⛓ Database ERD
-![ERD](./readme/erd.PNG)
+<img src="./readme/erd.PNG" width="700" height="500">
 
 ## 📓 Summary Notes
 > Click Notion icon
